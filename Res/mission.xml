@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Mission>
+  <MissionItem>
+    <Latitude>
+    </Latitude>
+    <Longitude>
+    </Longitude>
+    <RelativeAltitude>
+    </RelativeAltitude>
+    <Speed>
+    </Speed>
+    <IsFlyThrough>
+    </IsFlyThrough>
+    <GimbalPitch>
+    </GimbalPitch>
+    <GimbalYaw>
+    </GimbalYaw>
+    <CameraAction>
+    </CameraAction>
+    <LoiterTime>
+    </LoiterTime>
+    <Latitude>
+    </Latitude>
+    <Latitude>
+    </Latitude>
+    <Latitude>
+    </Latitude>
+    <Latitude>
+    </Latitude>
+  </MissionItem>
+</Mission>
+
+            mission["pos1"] = (36.144957707749775, -86.79318334215512, 50.0);
+            mission["pos2"] = (36.14491438859771, -86.79317261331985, 50.0);
+            mission["pos3"] = (36.14650851763573, -86.79237867950808, 150.0);
+            mission["pos4"] = (36.14662114509244, -86.79489995580218, 250.0);
+            mission["pos5"] = (36.14527826873162, -86.79446543797276, 100.0);
+            mission["pos6"] = (36.144957707749775, -86.79318334215512, 50.0);

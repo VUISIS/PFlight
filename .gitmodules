@@ -1,0 +1,9 @@
+[submodule "Ext/P"]
+	path = Ext/P
+	url = https://github.com/p-org/P.git
+[submodule "Ext/tinyxml2"]
+	path = Ext/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git
+[submodule "Ext/MAVSDK"]
+	path = Ext/MAVSDK
+	url = https://github.com/mavlink/MAVSDK.git
