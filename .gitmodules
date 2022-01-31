@@ -1,3 +1,6 @@
 [submodule "Ext/MAVSDK"]
 	path = Ext/MAVSDK
 	url = https://github.com/mavlink/MAVSDK.git
+[submodule "Ext/P"]
+	path = Ext/P
+	url = https://github.com/VUISIS/P.git
