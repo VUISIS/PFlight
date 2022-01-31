@@ -19,18 +19,18 @@ set(SRC
     PGenerated/FlightSystem.h
 )
 
-file(GLOB_RECURSE P_SRC "${CMAKE_SOURCE_DIR}/../build/P/include/*.h")
+file(GLOB_RECURSE P_SRC "${CMAKE_SOURCE_DIR}/../Ext/P/Bld/Drops/Prt/include/*.h")
 
 set(TINYXML_INC 
     ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/install/include/tinyxml2.h
 )
 
 set(LIBH_SRC
-    ${CMAKE_SOURCE_DIR}/../build/P/include/libhandler.h
+    ${CMAKE_SOURCE_DIR}/../Ext/P/Bld/Drops/Prt/include/libhandler.h
 )
 
 set(P_LIB
-    ${CMAKE_SOURCE_DIR}/../build/P/lib/libPrt_static.a
+    ${CMAKE_SOURCE_DIR}/../Ext/P/Bld/Drops/Prt/lib/libPrt_static.a
 )
 
 set(TINYXML_LIB
@@ -38,7 +38,7 @@ set(TINYXML_LIB
 )
 
 set(LIBH_LIB
-    ${CMAKE_SOURCE_DIR}/../Ext/PVUISIS/Ext/libhandler/out/gcc-amd64-linux-gnu/debug/libhandler.a
+    ${CMAKE_SOURCE_DIR}/../Ext/P/Ext/libhandler/out/gcc-amd64-linux-gnu/debug/libhandler.a
 )
 
 add_executable(${PROJECT_NAME}
@@ -48,12 +48,12 @@ add_executable(${PROJECT_NAME}
     ${LIBH_SRC}
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/../build/P/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/../Ext/P/Bld/Drops/Prt/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/PForeign)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/PGenerated)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${P_LIB})
 target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads)
-target_link_libraries(${PROJECT_NAME} PUBLIC ${TINYXML_LIB})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBH_LIB})
+target_link_libraries(${PROJECT_NAME} PUBLIC ${TINYXML_LIB})
 target_link_libraries(${PROJECT_NAME} PUBLIC MAVSDK::mavsdk)
