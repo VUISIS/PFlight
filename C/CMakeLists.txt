@@ -51,6 +51,7 @@ add_executable(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/../Ext/P/Bld/Drops/Prt/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/PForeign)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/PGenerated)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/tinyxml2/tinyxml2/src/tinyxml2)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${P_LIB})
 target_link_libraries(${PROJECT_NAME} PUBLIC Threads::Threads)
