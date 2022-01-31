@@ -24,7 +24,7 @@ jobs:
     
     - name: Install Java, P, and Coyote
       run: |
-          apt update && apt install default-jre
+          sudo apt update && sudo apt install -y default-jre
           dotnet tool install --global P
           dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
       working-directory: ${{github.workspace}}
