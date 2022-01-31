@@ -1,0 +1,11 @@
+<Project>
+<ProjectName>FlightSystem</ProjectName>
+<InputFiles>
+    <PFile>./PTst</PFile>
+	<PFile>./PSrc</PFile>
+    <PFile>./PSrc/Foreign</PFile>
+    <PFile>./PSrc/Monitors</PFile>
+</InputFiles>
+<Target>C</Target>
+<OutputDir>./PGenerated/</OutputDir>
+</Project>

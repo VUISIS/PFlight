@@ -1,4 +1,3 @@
-event eMissionFinished : bool;
 event eMissionUploaded : bool;
 event eMissionStarted: bool;
 event eMissionCleared : bool;
@@ -17,10 +16,6 @@ machine MissionMonitor
 
 	state MonitorMission
     {
-		on eRespMissionFinished do (res: bool)
-		{
-            send flightcontroller, eMissionFinished, res;
-		}
         on eRespMissionUpload do (uploaded: bool)
         {
             send flightcontroller, eMissionUploaded, uploaded;

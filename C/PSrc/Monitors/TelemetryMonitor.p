@@ -1,6 +1,5 @@
 event eTelemetryHealthAllOK: bool;
-event eLandingStatus : tLandedState;
-event eLand : bool;
+event eInAirStatus : bool;
 
 machine TelemetryMonitor
 {
@@ -21,13 +20,9 @@ machine TelemetryMonitor
 		{
 			send flightcontroller, eTelemetryHealthAllOK, health;
 		}
-		on eRespLandingStatus do (status: tLandedState)
+		on eRespInAirStatus do (status: bool)
 		{
-			send flightcontroller, eLandingStatus, status;
-		}
-		on eRespLand do (res: bool)
-		{
-			send flightcontroller, eLand, res;
+			send flightcontroller, eInAirStatus, status;
 		}
 	}
 }

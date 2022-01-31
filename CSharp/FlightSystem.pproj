@@ -1,7 +1,7 @@
 <Project>
 <ProjectName>FlightSystem</ProjectName>
 <InputFiles>
-	<PFile>./PSrc/</PFile>
+	<PFile>./PSrc</PFile>
     <PFile>./PSpec</PFile>
     <PFile>./PTst</PFile>
     <PFile>./PSrc/Foreign</PFile>

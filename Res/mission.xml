@@ -1,38 +1,92 @@
-<?xml version="1.0"?>
 <Mission>
   <MissionItem>
-    <Latitude>
-    </Latitude>
-    <Longitude>
-    </Longitude>
-    <RelativeAltitude>
-    </RelativeAltitude>
-    <Speed>
-    </Speed>
-    <IsFlyThrough>
-    </IsFlyThrough>
-    <GimbalPitch>
-    </GimbalPitch>
-    <GimbalYaw>
-    </GimbalYaw>
-    <CameraAction>
-    </CameraAction>
-    <LoiterTime>
-    </LoiterTime>
-    <Latitude>
-    </Latitude>
-    <Latitude>
-    </Latitude>
-    <Latitude>
-    </Latitude>
-    <Latitude>
-    </Latitude>
+    <Latitude>36.144957707749775</Latitude>
+    <Longitude>-86.79318334215512</Longitude>
+    <RelativeAltitude>25.0</RelativeAltitude>
+    <Speed>20.0</Speed>
+    <IsFlyThrough>true</IsFlyThrough>
+    <GimbalPitch>0.0</GimbalPitch>
+    <GimbalYaw>0.0</GimbalYaw>
+    <CameraAction>None</CameraAction>
+    <LoiterTime>0.0</LoiterTime>
+    <CameraPhotoInterval>0.0</CameraPhotoInterval>
+    <AcceptanceRadius>10.0</AcceptanceRadius>
+    <Yaw>0.0</Yaw>
+    <CameraPhotoDistance>0.0</CameraPhotoDistance>
+  </MissionItem>
+  <MissionItem>
+    <Latitude>36.14491438859771</Latitude>
+    <Longitude>-86.79317261331985</Longitude>
+    <RelativeAltitude>15.0</RelativeAltitude>
+    <Speed>20.0</Speed>
+    <IsFlyThrough>true</IsFlyThrough>
+    <GimbalPitch>0.0</GimbalPitch>
+    <GimbalYaw>0.0</GimbalYaw>
+    <CameraAction>None</CameraAction>
+    <LoiterTime>0.0</LoiterTime>
+    <CameraPhotoInterval>0.0</CameraPhotoInterval>
+    <AcceptanceRadius>10.0</AcceptanceRadius>
+    <Yaw>0.0</Yaw>
+    <CameraPhotoDistance>0.0</CameraPhotoDistance>
+  </MissionItem>
+  <MissionItem>
+    <Latitude>36.14650851763573</Latitude>
+    <Longitude>-86.79237867950808</Longitude>
+    <RelativeAltitude>25.0</RelativeAltitude>
+    <Speed>20.0</Speed>
+    <IsFlyThrough>true</IsFlyThrough>
+    <GimbalPitch>0.0</GimbalPitch>
+    <GimbalYaw>0.0</GimbalYaw>
+    <CameraAction>None</CameraAction>
+    <LoiterTime>0.0</LoiterTime>
+    <CameraPhotoInterval>0.0</CameraPhotoInterval>
+    <AcceptanceRadius>10.0</AcceptanceRadius>
+    <Yaw>0.0</Yaw>
+    <CameraPhotoDistance>0.0</CameraPhotoDistance>
+  </MissionItem>
+  <MissionItem>
+    <Latitude>36.14662114509244</Latitude>
+    <Longitude>-86.79489995580218</Longitude>
+    <RelativeAltitude>30.0</RelativeAltitude>
+    <Speed>20.0</Speed>
+    <IsFlyThrough>true</IsFlyThrough>
+    <GimbalPitch>0.0</GimbalPitch>
+    <GimbalYaw>0.0</GimbalYaw>
+    <CameraAction>None</CameraAction>
+    <LoiterTime>0.0</LoiterTime>
+    <CameraPhotoInterval>0.0</CameraPhotoInterval>
+    <AcceptanceRadius>10.0</AcceptanceRadius>
+    <Yaw>0.0</Yaw>
+    <CameraPhotoDistance>0.0</CameraPhotoDistance>
+  </MissionItem>
+  <MissionItem>
+    <Latitude>36.14527826873162</Latitude>
+    <Longitude>-86.79446543797276</Longitude>
+    <RelativeAltitude>30.0</RelativeAltitude>
+    <Speed>20.0</Speed>
+    <IsFlyThrough>true</IsFlyThrough>
+    <GimbalPitch>0.0</GimbalPitch>
+    <GimbalYaw>0.0</GimbalYaw>
+    <CameraAction>None</CameraAction>
+    <LoiterTime>0.0</LoiterTime>
+    <CameraPhotoInterval>0.0</CameraPhotoInterval>
+    <AcceptanceRadius>10.0</AcceptanceRadius>
+    <Yaw>0.0</Yaw>
+    <CameraPhotoDistance>0.0</CameraPhotoDistance>
+  </MissionItem>
+  <MissionItem>
+    <Latitude>36.1446175</Latitude>
+    <Longitude>-86.7933896</Longitude>
+    <RelativeAltitude>25.0</RelativeAltitude>
+    <Speed>20.0</Speed>
+    <IsFlyThrough>false</IsFlyThrough>
+    <GimbalPitch>0.0</GimbalPitch>
+    <GimbalYaw>0.0</GimbalYaw>
+    <CameraAction>None</CameraAction>
+    <LoiterTime>0.0</LoiterTime>
+    <CameraPhotoInterval>0.0</CameraPhotoInterval>
+    <AcceptanceRadius>10.0</AcceptanceRadius>
+    <Yaw>0.0</Yaw>
+    <CameraPhotoDistance>0.0</CameraPhotoDistance>
   </MissionItem>
 </Mission>
-
-            mission["pos1"] = (36.144957707749775, -86.79318334215512, 50.0);
-            mission["pos2"] = (36.14491438859771, -86.79317261331985, 50.0);
-            mission["pos3"] = (36.14650851763573, -86.79237867950808, 150.0);
-            mission["pos4"] = (36.14662114509244, -86.79489995580218, 250.0);
-            mission["pos5"] = (36.14527826873162, -86.79446543797276, 100.0);
-            mission["pos6"] = (36.144957707749775, -86.79318334215512, 50.0);
