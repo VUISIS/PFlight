@@ -17,7 +17,26 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'true'
+        
+    - uses: actions/setup-dotnet@v1
+      with:
+          dotnet-version: '3.1'
     
+    - name: Install Java, P, and Coyote
+      run: |
+          apt update && apt install default-jre
+          dotnet tool install --global P
+          dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
+      working-directory: ${{github.workspace}}
+      
     - name: Build P, MAVSDK, and FlightSystem
-      run: build.sh
+      run: |
+          chmod +x build.sh
+          ./build.sh
+      working-directory: ${{github.workspace}}
+      
+    - name: Generate C and C#
+      run: |
+          pc -proj:C/FlightSystem.pproj
+          pc -proj:CSharp/FlightSystem.pproj
       working-directory: ${{github.workspace}}
