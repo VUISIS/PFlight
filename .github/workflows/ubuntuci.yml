@@ -42,11 +42,15 @@ jobs:
           mkdir -p ../../../build/FlightSystem
       working-directory: ${{github.workspace}}/Ext/P/Src
       
-    - name: Generate C and C#
+    - name: Generate C
       run: |
-          pc -proj:C/FlightSystem.pproj
-          pc -proj:CSharp/FlightSystem.pproj
-      working-directory: ${{github.workspace}}
+          pc -proj:FlightSystem.pproj
+      working-directory: ${{github.workspace}}/C
+      
+    - name: Generate C#
+      run: |
+          pc -proj:FlightSystem.pproj
+      working-directory: ${{github.workspace}}/CSharp
       
     - name: Build FlightSystem
       run: |
