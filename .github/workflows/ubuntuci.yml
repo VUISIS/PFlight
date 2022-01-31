@@ -18,6 +18,6 @@ jobs:
       with:
         submodules: 'true'
     
-    - name: Rebase P
-      run: git pull --rebase origin master
-      working-directory: ${{github.workspace}}/Ext/P
+    - name: Build P, MAVSDK, and FlightSystem
+      run: build.sh
+      working-directory: ${{github.workspace}}
