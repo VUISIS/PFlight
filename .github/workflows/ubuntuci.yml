@@ -29,14 +29,27 @@ jobs:
           dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
       working-directory: ${{github.workspace}}
       
-    - name: Build P, MAVSDK, and FlightSystem
+    - name: Build MAVSDK
       run: |
-          chmod +x build.sh
-          ./build.sh
-      working-directory: ${{github.workspace}}
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../build/MAVSDK/install -B../../build/MAVSDK -H.
+          cmake --build ../../build/MAVSDK --target install
+      working-directory: ${{github.workspace}}/Ext/MAVSDK
+      
+    - name: Build P
+      run: |
+          cmake -DCMAKE_INSTALL_PREFIX=../../../build/P/install -B../../../build/P -H.
+          cmake --build ../../../build/P 
+          mkdir -p ../../../build/FlightSystem
+      working-directory: ${{github.workspace}}/Ext/P/Src
       
     - name: Generate C and C#
       run: |
           pc -proj:C/FlightSystem.pproj
           pc -proj:CSharp/FlightSystem.pproj
       working-directory: ${{github.workspace}}
+      
+    - name: Build FlightSystem
+      run: |
+          cmake -DCMAKE_PREFIX_PATH=../MAVSDK/install/lib/cmake/MAVSDK ../../C
+          make -j$(nproc --all)
+      working-directory: ${{github.workspace}}/build/FlightSystem
