@@ -22,7 +22,7 @@ set(SRC
 file(GLOB_RECURSE P_SRC "${CMAKE_SOURCE_DIR}/../Ext/P/Bld/Drops/Prt/include/*.h")
 
 set(TINYXML_INC 
-    ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/install/include/tinyxml2.h
+    ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/tinyxml2/tinyxml2/src/tinyxml2/tinyxml2.h
 )
 
 set(LIBH_SRC
@@ -34,7 +34,7 @@ set(P_LIB
 )
 
 set(TINYXML_LIB
-    ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/install/lib/libtinyxml2.a
+    ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/tinyxml2/tinyxml2/src/tinyxml2-build/libtinyxml2.a
 )
 
 set(LIBH_LIB
