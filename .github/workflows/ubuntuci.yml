@@ -57,3 +57,11 @@ jobs:
           cmake -DCMAKE_PREFIX_PATH="../MAVSDK/install/lib/cmake/MAVSDK;../MAVSDK/third_party/tinyxml2/tinyxml2/src/tinyxml2/cmake" ../../C
           make -j$(nproc --all)
       working-directory: ${{github.workspace}}/build/FlightSystem
+      
+    - name: Run Deterministic Tests
+      run: coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.CheckDroneState.Execute -i 1000
+      working-directory: ${{github.workspace}}/CSharp
+      
+    - name: Run Non-Deterministic Tests
+      run: coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.NonDetCheckDroneState.Execute -i 1000
+      working-directory: ${{github.workspace}}/CSharp
