@@ -365,22 +365,8 @@ machine FlightController
                 {
                     if(!health)
                     {
-                        send mavsdk, eReqInAirStatus;
-                        receive
-                        {
-                            case eInAirStatus: (status: bool)
-                            {
-                                if(status)
-                                {
-                                    send mavsdk, eReqReturnToLaunch;
-                                    goto ReturnToLaunch;
-                                }
-                                else
-                                {
-                                    goto Error;
-                                }
-                            }
-                        }
+                        send mavsdk, eReqReturnToLaunch;
+                        goto ReturnToLaunch;
                     }
                 }
             }           
@@ -402,22 +388,8 @@ machine FlightController
                 {
                     if(status == CRITICAL)
                     {
-                        send mavsdk, eReqInAirStatus;
-                        receive
-                        {
-                            case eInAirStatus: (status: bool)
-                            {
-                                if(status)
-                                {
-                                    send mavsdk, eReqReturnToLaunch;
-                                    goto ReturnToLaunch;
-                                }
-                                else
-                                {
-                                    goto Shutdown;
-                                }
-                            }
-                        }
+                        send mavsdk, eReqReturnToLaunch;
+                        goto ReturnToLaunch;
                     }
                 }
             }
@@ -508,21 +480,7 @@ machine FlightController
                 {
                     numFlights = numFlights + 1;
 
-                    send mavsdk, eReqClearMission;
-                    receive
-                    {
-                        case eMissionCleared: (status: bool)
-                        {
-                            if(status)
-                            {
-                                goto PreFlight;
-                            }
-                            else
-                            {
-                                goto Error;
-                            }
-                        }
-                    }
+                    goto PreFlight;
                 }
                 else
                 {

@@ -397,24 +397,9 @@ machine FlightController
                 {
                     if(!health)
                     {
-                        announce eMavSDKReq, 7;
-                        send mavsdk, eReqInAirStatus;
-                        receive
-                        {
-                            case eInAirStatus: (status: bool)
-                            {
-                                if(status)
-                                {
-                                    announce eMavSDKReq, 15;
-                                    send mavsdk, eReqReturnToLaunch;
-                                    goto ReturnToLaunch;
-                                }
-                                else
-                                {
-                                    goto Error;
-                                }
-                            }
-                        }
+                        announce eMavSDKReq, 15;
+                        send mavsdk, eReqReturnToLaunch;
+                        goto ReturnToLaunch;
                     }
                 }
             }        
@@ -438,24 +423,9 @@ machine FlightController
                 {
                     if(status == CRITICAL)
                     {
-                        announce eMavSDKReq, 7;
-                        send mavsdk, eReqInAirStatus;
-                        receive
-                        {
-                            case eInAirStatus: (status: bool)
-                            {
-                                if(status)
-                                {
-                                    announce eMavSDKReq, 15;
-                                    send mavsdk, eReqReturnToLaunch;
-                                    goto ReturnToLaunch;
-                                }
-                                else
-                                {
-                                    goto Shutdown;
-                                }
-                            }
-                        }
+                        announce eMavSDKReq, 15;
+                        send mavsdk, eReqReturnToLaunch;
+                        goto ReturnToLaunch;
                     }
                 }
             }

@@ -17,7 +17,7 @@ machine BatteryMonitor
 	{   defer eRespBatteryRemaining;
 		entry (fc: machine)
         {
-            depleteBattery = true;
+            depleteBattery = false;
             count = 0;
 			flightcontroller = fc;
 		}
@@ -28,7 +28,7 @@ machine BatteryMonitor
     {
 		on eRespBatteryRemaining do (remaining: float)
 		{
-            if(remaining < 0.1 || count > 125)
+            if(remaining < 0.1 || count > 250)
             {
                 send flightcontroller, eBatteryRemaining, CRITICAL;
             }
