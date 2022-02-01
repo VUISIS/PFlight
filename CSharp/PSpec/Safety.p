@@ -19,7 +19,7 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
     }
 
     state PreFlight
-    {
+    {   ignore eSpec_PreFlight;
         on eError goto Error;
         on eArm goto Arm;
         on eDisarmed goto Disarm;
@@ -27,12 +27,14 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state Arm
     {
+        ignore eArm;
         on eTakeoff goto Takeoff;
         on eError goto Error;
     }
 
     state Takeoff
     {
+        ignore eTakeoff;
         on eHold goto Hold;
         on eError goto Error;
         on eReturnToLaunch goto ReturnToLaunch;
@@ -40,6 +42,7 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state Hold
     {
+        ignore eHold;
         on eInAir goto InAir;
         on eError goto Error;
         on eReturnToLaunch goto ReturnToLaunch;
@@ -47,6 +50,7 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state InAir
     {
+        ignore eInAir;
         on eReturnToLaunch goto ReturnToLaunch;
         on eError goto Error;
         on eLanding goto Land;
@@ -54,18 +58,21 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state Land
     {
+        ignore eLanding;
         on eError goto Error;
         on eDisarmed goto Disarm;
     }
 
     state Disarm
     {
+        ignore eDisarmed;
         on eError goto Error;
         on eClearedMission goto PreFlight;
     }
 
     state ReturnToLaunch
     {
+        ignore eReturnToLaunch;
         on eError goto Error;
     }
 
@@ -77,33 +84,36 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 event eMavSDKReq : int;
 event eMavSDKResp : int;
 
-spec GuaranteedProgress observes eMavSDKReq, eMavSDKResp 
+spec LivenessMonitor observes eMavSDKReq, eMavSDKResp 
 {
-    var pendingReqs: set[int];
-    start state Init
+    var reqId: set[int];
+    start state Init 
     {
-        on eMavSDKReq goto PendingReq with (reqId: int)
+        ignore eMavSDKResp;
+        on eMavSDKReq goto PendingReqs with (id: int)
         {
-            pendingReqs += (reqId);
+            reqId += (id);
+            print format("Req {0}", reqId);
         }
     }
 
-    hot state PendingReq 
+    hot state PendingReqs
     {
-        on eMavSDKResp do (respId: int)
+        on eMavSDKResp do (id: int)
         {
-            assert respId in pendingReqs, format ("Unexpected rId: {0} received, expected one of {1}", respId, pendingReqs);
-            pendingReqs -= (respId);
-            if(sizeof(pendingReqs) == 0) 
-                goto NoPendingReq;
+            assert id in reqId, format ("Unexpected rId: {0} received, expected one of {1}", id, reqId);
+            reqId -= (id);
+            print format("Resp {0}", reqId);
+            if(sizeof(reqId) == 0)
+            {
+                goto Init;
+            }
         }
-    }
 
-    cold state NoPendingReq
-    {
-        on eMavSDKReq goto PendingReq with (reqId: int)
+        on eMavSDKReq goto PendingReqs with (id: int)
         {
-            pendingReqs += (reqId);
+            reqId += (id);
+            print format("Req {0}", reqId);
         }
     }
 }

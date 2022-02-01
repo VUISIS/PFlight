@@ -1,8 +1,8 @@
 #include "FlightSystem.h"
 #include "Prt.h"
 
-#include <iostream>
-#include <fstream>
+//#include <iostream>
+//#include <fstream>
 
 PRT_PROCESS* MAIN_P_PROCESS;
 //std::ofstream f;
@@ -53,10 +53,9 @@ static void LogHandler(PRT_STEP step, PRT_MACHINESTATE* sender, PRT_MACHINEINST*
 int main(int argc, char *argv[]) 
 {
         ///f.open("log.txt");
-    PRT_DBG_START_MEM_BALANCED_REGION
-    {
         PRT_GUID processGuid;
         MAIN_P_PROCESS = PrtStartProcess(processGuid, &P_GEND_IMPL_DefaultImpl, ErrorHandler, LogHandler);
+        //PrtSetSchedulingPolicy(MAIN_P_PROCESS, PRT_SCHEDULINGPOLICY_COOPERATIVE);
         PRT_UINT32 machineId;
         PRT_BOOLEAN foundMainMachine = PrtLookupMachineByName("Drone", &machineId);
         if (foundMainMachine == PRT_FALSE)
@@ -65,8 +64,7 @@ int main(int argc, char *argv[])
                 exit(1);
         }
         PrtMkMachine(MAIN_P_PROCESS, machineId, 0);
+        //PrtRunProcess(MAIN_P_PROCESS);
         PrtStopProcess(MAIN_P_PROCESS);
         //f.close();
-    }
-    PRT_DBG_END_MEM_BALANCED_REGION
 }

@@ -1,5 +1,4 @@
 event eRaiseError;
-event eHaltTimer;
 
 event eReqArm;
 event eReqTelemetryHealth;
@@ -64,21 +63,34 @@ machine FlightController
         entry
         {      
             announce eSpec_PreFlight;
-            send mavsdk, eReqBatteryRemaining;
             announce eMavSDKReq, 0;
+            send mavsdk, eReqBatteryRemaining;
             receive
             {
                 case eBatteryRemaining: (bstate: tBatteryState)
                 {
                     if(bstate == CRITICAL)
                     {
-                        goto Disarm;
+                        goto Shutdown;
+                    }
+                }
+            }
+
+            send mavsdk, eReqClearMission;
+            announce eMavSDKReq, 14;
+            receive
+            {
+                case eMissionCleared: (status: bool)
+                {
+                    if(!status)
+                    {
+                        goto Error;
                     }
                 }
             }
             
-            send mavsdk, eReqMissionUpload;
             announce eMavSDKReq, 1;
+            send mavsdk, eReqMissionUpload;
             receive
             {
                 case eMissionUploaded: (payload: bool)
@@ -90,8 +102,8 @@ machine FlightController
                 }
             }
             
-            send mavsdk, eReqSystemStatus;
             announce eMavSDKReq, 2;
+            send mavsdk, eReqSystemStatus;
             receive
             {
                 case eSystemConnected: (connected: bool)
@@ -103,8 +115,8 @@ machine FlightController
                 }
             }
             
-            send mavsdk, eReqTelemetryHealth;
             announce eMavSDKReq, 3;
+            send mavsdk, eReqTelemetryHealth;
             receive
             {
                 case eTelemetryHealthAllOK: (health: bool)
@@ -115,6 +127,8 @@ machine FlightController
                     }
                     else
                     {
+                        send mavsdk, eReqArm;
+                        announce eMavSDKReq, 4;
                         goto Arm;
                     }
                 }
@@ -127,8 +141,42 @@ machine FlightController
         entry
         {
             announce eArm;
-            send mavsdk, eReqArm;
-            announce eMavSDKReq, 4;
+            announce eMavSDKReq, 2;
+            send mavsdk, eReqSystemStatus;
+            receive
+            {
+                case eSystemConnected: (connected: bool)
+                {
+                    if(!connected)
+                    {
+                        goto Error;
+                    }
+                }
+            }
+            send mavsdk, eReqBatteryRemaining;
+            announce eMavSDKReq, 0;
+            receive 
+            {
+                case eBatteryRemaining: (status: tBatteryState)
+                {
+                    if(status == CRITICAL)
+                    {
+                        goto Shutdown;
+                    }
+                }
+            }
+            send mavsdk, eReqTelemetryHealth; 
+            announce eMavSDKReq, 3; 
+            receive
+            {
+                case eTelemetryHealthAllOK: (health: bool)
+                {
+                    if(!health)
+                    {
+                        goto Error;
+                    }
+                }
+            }
         }
         on eRespArm do (status: bool)
         {
@@ -138,28 +186,9 @@ machine FlightController
             }
             else
             {
+                announce eMavSDKReq, 5;     
+                send mavsdk, eReqTakeoff, 33.0;
                 goto Takeoff;
-            }
-        }
-        on eBatteryRemaining do (status: tBatteryState)
-        {
-            if(status == CRITICAL)
-            {
-                goto Shutdown;
-            }
-        }
-        on eTelemetryHealthAllOK do (health: bool)
-        {
-            if(!health)
-            {
-                goto Error;
-            }
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
             }
         }
     }
@@ -168,9 +197,79 @@ machine FlightController
     {
         entry
         {   
-            announce eTakeoff;         
-            send mavsdk, eReqTakeoff, 33.0;
-            announce eMavSDKReq, 5;
+            announce eTakeoff; 
+            announce eMavSDKReq, 2;
+            send mavsdk, eReqSystemStatus;
+            receive
+            {
+                case eSystemConnected: (connected: bool)
+                {
+                    if(!connected)
+                    {
+                        goto Error;
+                    }
+                }
+            }
+            send mavsdk, eReqBatteryRemaining;
+            announce eMavSDKReq, 0;
+            receive 
+            {
+                case eBatteryRemaining: (status: tBatteryState)
+                {
+                    if(status == CRITICAL)
+                    {
+                        announce eMavSDKReq, 7;
+                        send mavsdk, eReqInAirStatus;
+                        receive
+                        {
+                            case eInAirStatus: (status: bool)
+                            {
+                                if(status)
+                                {
+                                    announce eMavSDKReq, 15;
+                                    send mavsdk, eReqReturnToLaunch;
+                                    goto ReturnToLaunch;
+                                }
+                                else
+                                {
+                                    goto Shutdown;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            send mavsdk, eReqTelemetryHealth; 
+            announce eMavSDKReq, 3; 
+            receive
+            {
+                case eTelemetryHealthAllOK: (health: bool)
+                {
+                    if(!health)
+                    {
+                        announce eMavSDKReq, 7;
+                        send mavsdk, eReqInAirStatus;
+                        receive
+                        {
+                            case eInAirStatus: (status: bool)
+                            {
+                                if(status)
+                                {
+                                    announce eMavSDKReq, 15;
+                                    send mavsdk, eReqReturnToLaunch;
+                                    goto ReturnToLaunch;
+                                }
+                                else
+                                {
+                                    goto Error;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            announce eMavSDKReq, 6;
+            send mavsdk, eReqAtTakeoffAlt;
         }
         on eRespTakeoff do (res: bool)
         {
@@ -178,73 +277,20 @@ machine FlightController
             {
                 goto Error;
             }
-            send mavsdk, eReqAtTakeoffAlt;
-            announce eMavSDKReq, 6;
         }
         on eRespAtTakeoffAlt do (status: bool)
         {
             if(status)
             {
+                announce eMavSDKReq, 8;
+                send mavsdk, eReqHold;
                 goto Hold;
             }
             else
             {
-                send mavsdk, eReqAtTakeoffAlt;
-                announce eMavSDKReq, 6;
+                goto Takeoff;
             }
         }
-        on eBatteryRemaining do (status: tBatteryState)
-        {
-            if(status == CRITICAL)
-            {
-                send mavsdk, eReqInAirStatus;
-                announce eMavSDKReq, 7;
-                receive
-                {
-                    case eInAirStatus: (status: bool)
-                    {
-                        if(status)
-                        {
-                            goto ReturnToLaunch;
-                        }
-                        else
-                        {
-                            goto Shutdown;
-                        }
-                    }
-                }
-            }
-        }
-        on eTelemetryHealthAllOK do (health: bool)
-        {
-            if(!health)
-            {
-                send mavsdk, eReqInAirStatus;
-                announce eMavSDKReq, 7;
-                receive
-                {
-                    case eInAirStatus: (status: bool)
-                    {
-                        if(status)
-                        {
-                            goto ReturnToLaunch;
-                        }
-                        else
-                        {
-                            goto Error;
-                        }
-                    }
-                }
-            }
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
-            }
-        }
-
     }
 
     state Hold
@@ -252,75 +298,90 @@ machine FlightController
         entry
         {            
             announce eHold;
-            send mavsdk, eReqHold;
-            announce eMavSDKReq, 8;
+            announce eMavSDKReq, 3;
+            send mavsdk, eReqTelemetryHealth; 
             receive
             {
-                case eRespHold: (res: bool) 
+                case eTelemetryHealthAllOK: (health: bool)
                 {
-                    if(res)
+                    if(!health)
                     {
-                        goto Mission;
+                        announce eMavSDKReq, 7;
+                        send mavsdk, eReqInAirStatus;
+                        receive
+                        {
+                            case eInAirStatus: (status: bool)
+                            {
+                                if(status)
+                                {
+                                    announce eMavSDKReq, 15;
+                                    send mavsdk, eReqReturnToLaunch;
+                                    goto ReturnToLaunch;
+                                }
+                                else
+                                {
+                                    goto Error;
+                                }
+                            }
+                        }
                     }
-                    else
+                }
+            }       
+            announce eMavSDKReq, 2;    
+            send mavsdk, eReqSystemStatus;
+            receive
+            {
+                case eSystemConnected: (connected: bool)
+                {
+                    if(!connected)
                     {
                         goto Error;
                     }
                 }
             }
-        }
-        on eBatteryRemaining do (status: tBatteryState)
-        {
-            if(status == CRITICAL)
+            announce eMavSDKReq, 0;
+            send mavsdk, eReqBatteryRemaining;
+            receive
             {
-                send mavsdk, eReqInAirStatus;
-                announce eMavSDKReq, 7;
-                receive
+                case eBatteryRemaining: (status: tBatteryState)
                 {
-                    case eInAirStatus: (status: bool)
+                    if(status == CRITICAL)
                     {
-                        if(status)
+                        announce eMavSDKReq, 7;
+                        send mavsdk, eReqInAirStatus;
+                        receive
                         {
-                            goto ReturnToLaunch;
-                        }
-                        else
-                        {
-                            goto Shutdown;
+                            case eInAirStatus: (status: bool)
+                            {
+                                if(status)
+                                {
+                                    announce eMavSDKReq, 15;
+                                    send mavsdk, eReqReturnToLaunch;
+                                    goto ReturnToLaunch;
+                                }
+                                else
+                                {
+                                    goto Shutdown;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        on eTelemetryHealthAllOK do (health: bool)
+        on eRespHold do (res: bool) 
         {
-            if(!health)
+            if(res)
             {
-                send mavsdk, eReqInAirStatus;
-                announce eMavSDKReq, 7;
-                receive
-                {
-                    case eInAirStatus: (status: bool)
-                    {
-                        if(status)
-                        {
-                            goto ReturnToLaunch;
-                        }
-                        else
-                        {
-                            goto Error;
-                        }
-                    }
-                }
+                announce eMavSDKReq, 9;
+                send mavsdk, eReqMissionStart;
+                goto Mission;
             }
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
+            else
             {
                 goto Error;
             }
         }
-
     }
 
     state Mission
@@ -328,8 +389,78 @@ machine FlightController
         entry
         {
             announce eInAir;
-            send mavsdk, eReqMissionStart;
-            announce eMavSDKReq, 9;
+            announce eMavSDKReq, 3;
+            send mavsdk, eReqTelemetryHealth; 
+            receive
+            {
+                case eTelemetryHealthAllOK: (health: bool)
+                {
+                    if(!health)
+                    {
+                        announce eMavSDKReq, 7;
+                        send mavsdk, eReqInAirStatus;
+                        receive
+                        {
+                            case eInAirStatus: (status: bool)
+                            {
+                                if(status)
+                                {
+                                    announce eMavSDKReq, 15;
+                                    send mavsdk, eReqReturnToLaunch;
+                                    goto ReturnToLaunch;
+                                }
+                                else
+                                {
+                                    goto Error;
+                                }
+                            }
+                        }
+                    }
+                }
+            }        
+            announce eMavSDKReq, 2;   
+            send mavsdk, eReqSystemStatus;
+            receive
+            {
+                case eSystemConnected: (connected: bool)
+                {
+                    if(!connected)
+                    {
+                        goto Error;
+                    }
+                }
+            }
+            announce eMavSDKReq, 0;
+            send mavsdk, eReqBatteryRemaining;
+            receive
+            {
+                case eBatteryRemaining: (status: tBatteryState)
+                {
+                    if(status == CRITICAL)
+                    {
+                        announce eMavSDKReq, 7;
+                        send mavsdk, eReqInAirStatus;
+                        receive
+                        {
+                            case eInAirStatus: (status: bool)
+                            {
+                                if(status)
+                                {
+                                    announce eMavSDKReq, 15;
+                                    send mavsdk, eReqReturnToLaunch;
+                                    goto ReturnToLaunch;
+                                }
+                                else
+                                {
+                                    goto Shutdown;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            send mavsdk, eReqMissionFinished;
+            announce eMavSDKReq, 10;
         }
         on eMissionStarted do (started: bool)
         {
@@ -337,73 +468,18 @@ machine FlightController
             {
                 goto Error;
             }
-            else
-            {
-                send mavsdk, eReqMissionFinished;
-                announce eMavSDKReq, 10;
-            }
         }
         on eRespMissionFinished do (status: bool)
         {
             if(status)
             {
+                announce eMavSDKReq, 11;
+                send mavsdk, eReqLand;
                 goto Land;
             }
             else
             {
-                send mavsdk, eReqMissionFinished;
-                announce eMavSDKReq, 10;
-            }
-        }
-        on eBatteryRemaining do (status: tBatteryState)
-        {
-            if(status == CRITICAL)
-            {
-                send mavsdk, eReqInAirStatus;
-                announce eMavSDKReq, 7;
-                receive
-                {
-                    case eInAirStatus: (status: bool)
-                    {
-                        if(status)
-                        {
-                            goto ReturnToLaunch;
-                        }
-                        else
-                        {
-                            goto Shutdown;
-                        }
-                    }
-                }
-            }
-        }
-        on eTelemetryHealthAllOK do (health: bool)
-        {
-            if(!health)
-            {
-                send mavsdk, eReqInAirStatus;
-                announce eMavSDKReq, 7;
-                receive
-                {
-                    case eInAirStatus: (status: bool)
-                    {
-                        if(status)
-                        {
-                            goto ReturnToLaunch;
-                        }
-                        else
-                        {
-                            goto Error;
-                        }
-                    }
-                }
-            }
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
+                goto Mission;
             }
         }
     }
@@ -414,34 +490,39 @@ machine FlightController
         entry
         {
             announce eLanding;
-            send mavsdk, eReqLand;
-            announce eMavSDKReq, 11;
+            announce eMavSDKReq, 12;
+            send mavsdk, eReqLandingState;
+            announce eMavSDKReq, 2;
+            send mavsdk, eReqSystemStatus;
+            receive
+            {
+                case eSystemConnected: (connected: bool)
+                {
+                    if(!connected)
+                    {
+                        goto Error;
+                    }
+                }
+            }
         }
         on eRespLand do (status: bool)
         {
-            if(status)
+            if(!status)
             {
-                send mavsdk, eReqLandingState;
-                announce eMavSDKReq, 12;
+                goto Error;
             }
         }
         on eRespLandingState do (val: int)
         {
             if(val == 1)
             {
+                announce eMavSDKReq, 13;
+                send mavsdk, eReqDisarm;
                 goto Disarm;
             }
             else
             {
-                send mavsdk, eReqLandingState;
-                announce eMavSDKReq, 12;
-            }
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
+                goto Land;
             }
         }
     }
@@ -452,8 +533,19 @@ machine FlightController
         entry
         {
             announce eDisarmed;
-            send mavsdk, eReqDisarm;
-            announce eMavSDKReq, 13;
+
+            announce eMavSDKReq, 2;
+            send mavsdk, eReqSystemStatus;
+            receive
+            {
+                case eSystemConnected: (connected: bool)
+                {
+                    if(!connected)
+                    {
+                        goto Error;
+                    }
+                }
+            }
         }
         on eRespDisarm do (status: bool)
         {
@@ -462,9 +554,9 @@ machine FlightController
                 if(numFlights < flights)
                 {
                     numFlights = numFlights + 1;
-
-                    send mavsdk, eReqClearMission;
+                    
                     announce eMavSDKReq, 14;
+                    send mavsdk, eReqClearMission;
                     receive
                     {
                         case eMissionCleared: (status: bool)
@@ -490,25 +582,47 @@ machine FlightController
                 goto Error;
             }
         }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
-            }
-        }
     }
 
     state ReturnToLaunch
     {
-        ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK;
+        ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
+               eRespTakeoff, eRespAtTakeoffAlt, eRespMissionFinished,
+               eMissionStarted, eRaiseError;
         entry
         {
             announce eReturnToLaunch;
-            send mavsdk, eReqReturnToLaunch;
-            announce eMavSDKReq, 15;
-            send mavsdk, eReqWaitForDisarmed;
             announce eMavSDKReq, 16;
+            send mavsdk, eReqWaitForDisarmed;
+            receive
+            {
+                case eRespWaitForDisarmed: (status: bool)
+                {
+                    if(!status)
+                    {
+                        goto ReturnToLaunch;
+                    }
+                    else
+                    {
+                        send mavsdk, eReqLandingState;
+                        announce eMavSDKReq, 12;
+                        receive
+                        {
+                            case eRespLandingState: (val: int)
+                            {
+                                if(val == 1)
+                                {
+                                    goto Shutdown;
+                                }
+                                else
+                                {
+                                    goto Error;
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
         }
         on eRespReturnToLaunch do (status: bool)
         {
@@ -516,16 +630,9 @@ machine FlightController
             {
                 goto Error;
             }
-        }
-        on eRespWaitForDisarmed do (status: bool)
-        {
-            if(status)
-            {
-                send mavsdk, eReqWaitForDisarmed;
-            }
             else
             {
-                goto Shutdown;
+                goto ReturnToLaunch;
             }
         }
     }
@@ -534,11 +641,12 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespWaitForDisarmed, eRespMissionFinished,
-               eMissionStarted, eRaiseError;
+               eMissionStarted, eRaiseError, eRespLand, eRespLandingState, eRespHold, eRespReturnToLaunch,
+               eRespDisarm;
         entry
         {
             announce eError;
-            send mavsdk, eHaltTimer;
+            send mavsdk, halt;
         }
     }
 
@@ -546,10 +654,10 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespWaitForDisarmed, eRespMissionFinished,
-               eMissionStarted;
+               eMissionStarted, eRespReturnToLaunch, eRespHold;
         entry
         {
-            send mavsdk, eHaltTimer;
+            send mavsdk, halt;
         }
     }
 }

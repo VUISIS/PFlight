@@ -15,5 +15,5 @@ cmake --build ../../../build/P
 cd ../../..
 mkdir -p build/FlightSystem
 cd build/FlightSystem
-cmake ../../C
+cmake -DCMAKE_PREFIX_PATH=../MAVSDK/install/lib/cmake/MAVSDK ../../C
 make -j$(nproc --all)

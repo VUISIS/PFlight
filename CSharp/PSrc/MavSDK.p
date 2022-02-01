@@ -8,15 +8,11 @@ machine MavSDK
     var sMonitor: machine;
     var bMonitor: machine;
     var mMonitor: machine;
-    var timer: Timer;
-    var tick: int;
     start state Init 
     {
         defer eReqMissionUpload;
         entry(cntl: machine)
         {    
-            tick = 0;
-            timer = CreateTimer(this);
             controller = cntl;
             if(CoreSetupMavSDK())
             {   
@@ -31,7 +27,6 @@ machine MavSDK
                 send mMonitor, eLinkInitialized;
                 send controller, eLinkInitialized;
                 
-                StartTimer(timer);
                 goto WaitForReq;
             }
             else
@@ -39,35 +34,10 @@ machine MavSDK
                 send controller, eRaiseError;
             }
         }
-        on eHaltTimer do 
-        {
-            send timer, halt;
-        }
     }
 
     state WaitForReq
     {
-        on eHaltTimer do 
-        {
-            send timer, halt;
-        }
-        on eTimeOut do 
-        {
-            if(tick > 200)
-            {
-                send tMonitor, eRespTelemetryHealth, TelemetryHealthAllOk();
-                send sMonitor, eRespSystemStatus, SystemStatus();
-                send bMonitor, eRespBatteryRemaining, BatteryRemaining();
-                
-                tick = 0;
-            }
-            else
-            {
-                tick = tick + 1;
-            }
-
-            StartTimer(timer);
-        }
         on eReqTelemetryHealth do
         {
             var status: bool;

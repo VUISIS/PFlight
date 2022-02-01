@@ -20,5 +20,3 @@ fun DisarmSystem() : bool;
 
 // Timer
 fun Sleep(msecs: int);
-fun StartTimer();
-fun CancelTimer();

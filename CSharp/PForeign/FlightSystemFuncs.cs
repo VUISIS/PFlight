@@ -11,14 +11,13 @@ namespace PImplementation
         private static bool determinism = true;
         public static PrtBool CoreSetupMavSDK(PMachine machine)
         {
+            battery_perc = 1.0f;
             if(determinism)
             {
-                battery_perc = 1.0f;
                 return (PrtBool) true;
             }
             else
             {
-                battery_perc = machine.TryRandomInt(0,100)/100.0f;
                 return (PrtBool) machine.TryRandomBool();
             }
         }
@@ -33,11 +32,6 @@ namespace PImplementation
             {
                 return (PrtBool) machine.TryRandomBool();
             }
-        }
-
-        public static void ShutdownSystem(PMachine machine)
-        {
-           
         }
 
         public static PrtBool ArmSystem(PMachine machine)
@@ -92,11 +86,11 @@ namespace PImplementation
         {
             if(determinism)
             {
-                battery_perc = battery_perc * 1.0f;
+                battery_perc = battery_perc * 0.9f;
             }
             else
             {
-                battery_perc = battery_perc * machine.TryRandomInt(100)/100.0f;
+                battery_perc = machine.TryRandomInt(5, 100)/100.0f;
             }
             PrtFloat perc = (PrtFloat)battery_perc;
             return perc;

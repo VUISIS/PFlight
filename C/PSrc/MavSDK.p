@@ -1,6 +1,4 @@
 event eLinkInitialized;
-event eTakeoffReached;
-event eTimeout assert 1;
 
 machine MavSDK
 {
@@ -35,28 +33,10 @@ machine MavSDK
                 send controller, eRaiseError;
             }
         }
-        on eHaltTimer do 
-        {
-            CancelTimer();
-        }
     }
 
     state WaitForReq
     {
-        entry
-        {
-            StartTimer();
-        }
-        on eTimeout do
-        {
-            send tMonitor, eRespTelemetryHealth, TelemetryHealthAllOk();            
-            send sMonitor, eRespSystemStatus, SystemStatus();
-            send bMonitor, eRespBatteryRemaining, BatteryRemaining();
-        }
-        on eHaltTimer do 
-        {
-            CancelTimer();
-        }
         on eReqTelemetryHealth do
         {
             var status: bool;

@@ -28,8 +28,8 @@ extern PRT_VALUE* P_InAirStatus_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argR
 extern PRT_VALUE* P_WaitForDisarmed_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_IsAtTakeoffAlt_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
-extern PRT_VALUE* P_StartTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
-extern PRT_VALUE* P_CancelTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+//extern PRT_VALUE* P_StartTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+//extern PRT_VALUE* P_CancelTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_LandSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_LandingState_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_DisarmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);

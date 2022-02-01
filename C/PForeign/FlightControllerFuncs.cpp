@@ -23,6 +23,11 @@ std::atomic_bool timer_flag = true;
 std::thread timer_thread;
 std::vector<mavsdk::Mission::MissionItem> _missionItems;
 
+PRT_MACHINEINST* contextM = NULL;
+PRT_VALUE* PTMP_tmp1 = NULL; 
+PRT_VALUE* PTMP_tmp10 = NULL;
+PRT_VALUE* PTMP_tmp2_20 = NULL;
+
 std::shared_ptr<mavsdk::System> get_system(mavsdk::Mavsdk& mavsdk)
 {
     std::cout << "<PrintLog> Waiting to discover system...\n";
@@ -73,8 +78,6 @@ PRT_VALUE* P_CoreSetupMavSDK_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 
     _telemetry = std::make_shared<mavsdk::Telemetry>(_system);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
 	return PrtMkBoolValue(PRT_TRUE);
 }
 
@@ -90,17 +93,16 @@ PRT_VALUE* P_ArmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     {
         return PrtMkBoolValue(PRT_FALSE);
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
 }
 
 PRT_VALUE* P_TakeoffSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::cout << "<PrintLog> Taking off to 15 m altitude." << std::endl;
-    mavsdk::Action::Result res = _action->set_takeoff_altitude(15.0);
-    if(res != mavsdk::Action::Result::Success)
-    {
-        return PrtMkBoolValue(PRT_FALSE);
-    }
+    _action->set_takeoff_altitude_async(15.0f, [](mavsdk::Action::Result res){
+        if(res == mavsdk::Action::Result::Success)
+        {
+            return PrtMkBoolValue(PRT_TRUE);
+        }
+    });
 
 	_action->takeoff_async([](mavsdk::Action::Result res){ 
         if(res == mavsdk::Action::Result::Success)
@@ -108,8 +110,6 @@ PRT_VALUE* P_TakeoffSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
             _action->takeoff_async(nullptr);
         }
     });
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     return PrtMkBoolValue(PRT_TRUE);
 }
 
@@ -128,7 +128,7 @@ PRT_VALUE* P_TelemetryHealthAllOk_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** ar
 
     if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
 	{
-        return PrtMkBoolValue((PRT_BOOLEAN)fut.get());
+        return PrtMkBoolValue((PRT_BOOLEAN)false);
     }
     return PrtMkBoolValue((PRT_BOOLEAN)fut.get());
 }
@@ -164,7 +164,6 @@ PRT_VALUE* P_UploadMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     }
     mavsdk::Mission::MissionPlan mission_plan{};
     mission_plan.mission_items = _missionItems;
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     const mavsdk::Mission::Result upload_result = _mission->upload_mission(mission_plan);
     if (upload_result != mavsdk::Mission::Result::Success) 
     {
@@ -175,20 +174,17 @@ PRT_VALUE* P_UploadMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_SystemStatus_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     return PrtMkBoolValue((PRT_BOOLEAN) _system->is_connected());
 }
 
 PRT_VALUE* P_BatteryRemaining_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     auto battery = _telemetry->battery();
     return PrtMkFloatValue((PRT_FLOAT)battery.remaining_percent);
 }
 
 PRT_VALUE* P_Holding_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     auto res = _action->hold();
     if(res != mavsdk::Action::Result::Success)
     {
@@ -199,7 +195,6 @@ PRT_VALUE* P_Holding_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_ReturnToLaunch_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     auto res = _action->return_to_launch();
     if(res != mavsdk::Action::Result::Success)
     {
@@ -210,7 +205,6 @@ PRT_VALUE* P_ReturnToLaunch_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_MissionFinished_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     mavsdk::Mission::MissionProgress prog = _mission->mission_progress();
     if(prog.total == prog.current)
     {
@@ -221,8 +215,6 @@ PRT_VALUE* P_MissionFinished_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 
 PRT_VALUE* P_StartMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::cout << "<PrintLog> Flying mission plan." << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     auto res = _mission->start_mission();
     if(res != mavsdk::Mission::Result::Success)
     {
@@ -233,7 +225,6 @@ PRT_VALUE* P_StartMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_ClearMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     auto res = _mission->clear_mission();
     if(res != mavsdk::Mission::Result::Success)
     {
@@ -245,13 +236,11 @@ PRT_VALUE* P_ClearMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 PRT_VALUE* P_InAirStatus_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     bool res = _telemetry->in_air();
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
     return PrtMkBoolValue((PRT_BOOLEAN)res);
 }
 
 PRT_VALUE* P_WaitForDisarmed_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     bool armed = _telemetry->armed();
     if(armed)
     {
@@ -262,16 +251,13 @@ PRT_VALUE* P_WaitForDisarmed_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 
 PRT_VALUE* P_IsAtTakeoffAlt_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     mavsdk::Telemetry::Position pos = _telemetry->position();
-    float eps = 0.5f;
-    float dif = abs(pos.relative_altitude_m - 15.0f);
-    if(dif < eps)
+    if(abs(pos.relative_altitude_m - 15.0f) < 0.5f)
     {
-        return PrtMkBoolValue((PRT_BOOLEAN)true);
+        return PrtMkBoolValue(PRT_TRUE);
     }
 
-    return PrtMkBoolValue((PRT_BOOLEAN)false);
+    return PrtMkBoolValue(PRT_FALSE);
 }
 
 PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
@@ -285,19 +271,19 @@ PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     return PrtMkNullValue();
 }
 
-PRT_VALUE* P_StartTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+/*PRT_VALUE* P_StartTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     timer_thread = std::thread([timer_flag, context, argRefs]() {
+        PRT_VALUE* PTMP_tmp10 = NULL;
+
+        PRT_VALUE** P_LVALUE_22 = &(PTMP_tmp10);
+        PrtFreeValue(*P_LVALUE_22);
+        *P_LVALUE_22 = PrtCloneValue((&P_EVENT_eTimeout.value));
+
         while(timer_flag)
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
-            PRT_VALUE* PTMP_tmp10 = NULL;
-
-            PRT_VALUE** P_LVALUE_22 = &(PTMP_tmp10);
-            PrtFreeValue(*P_LVALUE_22);
-            *P_LVALUE_22 = PrtCloneValue((&P_EVENT_eTimeout.value));
-            
             PrtSendInternal(context, PrtGetMachine(context->process, context->id), PTMP_tmp10, 0);
         }
     });
@@ -307,11 +293,10 @@ PRT_VALUE* P_CancelTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     timer_flag = false;
     timer_thread.join();
-}
+}*/
 
 PRT_VALUE* P_LandSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     _action->land_async([](mavsdk::Action::Result res){ 
         if(res == mavsdk::Action::Result::Success)
         {
@@ -324,7 +309,6 @@ PRT_VALUE* P_LandSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_LandingState_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     mavsdk::Telemetry::LandedState ls = _telemetry->landed_state();
     if(ls == mavsdk::Telemetry::LandedState::OnGround)
     {
@@ -337,7 +321,6 @@ PRT_VALUE* P_LandingState_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 PRT_VALUE* P_DisarmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     mavsdk::Action::Result res = _action->disarm(); 
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     if(res == mavsdk::Action::Result::Success)
     {
         return PrtMkBoolValue((PRT_BOOLEAN)true);

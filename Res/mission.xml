@@ -11,7 +11,7 @@
     <LoiterTime>0.0</LoiterTime>
     <CameraPhotoInterval>0.0</CameraPhotoInterval>
     <AcceptanceRadius>10.0</AcceptanceRadius>
-    <Yaw>0.0</Yaw>
+    <Yaw>30.0</Yaw>
     <CameraPhotoDistance>0.0</CameraPhotoDistance>
   </MissionItem>
   <MissionItem>
@@ -26,7 +26,7 @@
     <LoiterTime>0.0</LoiterTime>
     <CameraPhotoInterval>0.0</CameraPhotoInterval>
     <AcceptanceRadius>10.0</AcceptanceRadius>
-    <Yaw>0.0</Yaw>
+    <Yaw>30.0</Yaw>
     <CameraPhotoDistance>0.0</CameraPhotoDistance>
   </MissionItem>
   <MissionItem>
@@ -41,37 +41,7 @@
     <LoiterTime>0.0</LoiterTime>
     <CameraPhotoInterval>0.0</CameraPhotoInterval>
     <AcceptanceRadius>10.0</AcceptanceRadius>
-    <Yaw>0.0</Yaw>
-    <CameraPhotoDistance>0.0</CameraPhotoDistance>
-  </MissionItem>
-  <MissionItem>
-    <Latitude>36.14662114509244</Latitude>
-    <Longitude>-86.79489995580218</Longitude>
-    <RelativeAltitude>30.0</RelativeAltitude>
-    <Speed>20.0</Speed>
-    <IsFlyThrough>true</IsFlyThrough>
-    <GimbalPitch>0.0</GimbalPitch>
-    <GimbalYaw>0.0</GimbalYaw>
-    <CameraAction>None</CameraAction>
-    <LoiterTime>0.0</LoiterTime>
-    <CameraPhotoInterval>0.0</CameraPhotoInterval>
-    <AcceptanceRadius>10.0</AcceptanceRadius>
-    <Yaw>0.0</Yaw>
-    <CameraPhotoDistance>0.0</CameraPhotoDistance>
-  </MissionItem>
-  <MissionItem>
-    <Latitude>36.14527826873162</Latitude>
-    <Longitude>-86.79446543797276</Longitude>
-    <RelativeAltitude>30.0</RelativeAltitude>
-    <Speed>20.0</Speed>
-    <IsFlyThrough>true</IsFlyThrough>
-    <GimbalPitch>0.0</GimbalPitch>
-    <GimbalYaw>0.0</GimbalYaw>
-    <CameraAction>None</CameraAction>
-    <LoiterTime>0.0</LoiterTime>
-    <CameraPhotoInterval>0.0</CameraPhotoInterval>
-    <AcceptanceRadius>10.0</AcceptanceRadius>
-    <Yaw>0.0</Yaw>
+    <Yaw>30.0</Yaw>
     <CameraPhotoDistance>0.0</CameraPhotoDistance>
   </MissionItem>
   <MissionItem>
@@ -86,7 +56,7 @@
     <LoiterTime>0.0</LoiterTime>
     <CameraPhotoInterval>0.0</CameraPhotoInterval>
     <AcceptanceRadius>10.0</AcceptanceRadius>
-    <Yaw>0.0</Yaw>
+    <Yaw>200.0</Yaw>
     <CameraPhotoDistance>0.0</CameraPhotoDistance>
   </MissionItem>
 </Mission>
