@@ -1,3 +1,9 @@
+/*************************************************************************************
+
+    PreFlight -> Arm -> Takeoff -> Hold -> InAir -> Land -> Disarm -> Shutdown
+
+**************************************************************************************/
+
 event eSpec_PreFlight;
 event eError;
 event eArm;
@@ -7,11 +13,11 @@ event eInAir;
 event eLanding;
 event eDisarmed;
 event eReturnToLaunch;
-event eClearedMission;
+event eShutdownSystem;
 
 spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHold,
-                                    eInAir, eReturnToLaunch, eClearedMission, eLanding,
-                                    eDisarmed
+                                    eInAir, eReturnToLaunch, eLanding,
+                                    eDisarmed, eShutdownSystem
 {
     start state Init {
         on eSpec_PreFlight goto PreFlight;
@@ -19,22 +25,22 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
     }
 
     state PreFlight
-    {   ignore eSpec_PreFlight;
+    {   
         on eError goto Error;
         on eArm goto Arm;
-        on eDisarmed goto Disarm;
+        on eShutdownSystem goto Shutdown;
     }
 
     state Arm
     {
-        ignore eArm;
         on eTakeoff goto Takeoff;
         on eError goto Error;
+        on eDisarmed goto Disarm;
     }
 
     state Takeoff
     {
-        ignore eTakeoff;
+        on eTakeoff goto Takeoff;
         on eHold goto Hold;
         on eError goto Error;
         on eReturnToLaunch goto ReturnToLaunch;
@@ -42,7 +48,6 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state Hold
     {
-        ignore eHold;
         on eInAir goto InAir;
         on eError goto Error;
         on eReturnToLaunch goto ReturnToLaunch;
@@ -50,7 +55,7 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state InAir
     {
-        ignore eInAir;
+        on eInAir goto InAir;
         on eReturnToLaunch goto ReturnToLaunch;
         on eError goto Error;
         on eLanding goto Land;
@@ -58,26 +63,32 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
 
     state Land
     {
-        ignore eLanding;
+        on eLanding goto Land;
         on eError goto Error;
         on eDisarmed goto Disarm;
     }
 
     state Disarm
     {
-        ignore eDisarmed;
         on eError goto Error;
-        on eClearedMission goto PreFlight;
+        on eShutdownSystem goto Shutdown;
     }
 
     state ReturnToLaunch
     {
-        ignore eReturnToLaunch;
+        on eReturnToLaunch goto ReturnToLaunch;
+        on eShutdownSystem goto Shutdown;
         on eError goto Error;
+    }
+
+    state Shutdown
+    {
+        ignore eShutdownSystem;
     }
 
     state Error
     {
+        ignore eError;
     }  
 }
 
@@ -93,7 +104,6 @@ spec LivenessMonitor observes eMavSDKReq, eMavSDKResp
         on eMavSDKReq goto PendingReqs with (id: int)
         {
             reqId += (id);
-            print format("Req {0}", reqId);
         }
     }
 
@@ -103,7 +113,6 @@ spec LivenessMonitor observes eMavSDKReq, eMavSDKResp
         {
             assert id in reqId, format ("Unexpected rId: {0} received, expected one of {1}", id, reqId);
             reqId -= (id);
-            print format("Resp {0}", reqId);
             if(sizeof(reqId) == 0)
             {
                 goto Init;
@@ -113,7 +122,6 @@ spec LivenessMonitor observes eMavSDKReq, eMavSDKResp
         on eMavSDKReq goto PendingReqs with (id: int)
         {
             reqId += (id);
-            print format("Req {0}", reqId);
         }
     }
 }

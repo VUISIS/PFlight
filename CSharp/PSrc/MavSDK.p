@@ -70,6 +70,8 @@ machine MavSDK
         {
             var takeoff: bool;
             takeoff = TakeoffSystem(alt);
+/******************* Liveness Spec Failure  ***********/
+            //UnReliableSend(controller, eRespTakeoff, takeoff, eMavSDKResp, 5);
             send controller, eRespTakeoff, takeoff;
             announce eMavSDKResp, 5;
         }
@@ -97,7 +99,7 @@ machine MavSDK
         on eReqReturnToLaunch do 
         {
             var status: bool;
-            status = ReturnToLaunch();
+            status = RTL();
             send controller, eRespReturnToLaunch, status;
             announce eMavSDKResp, 15;
         }

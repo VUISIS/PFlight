@@ -7,7 +7,7 @@ fun UploadMission() : bool;
 fun SystemStatus() : bool;
 fun BatteryRemaining() : float;
 fun Holding() : bool;
-fun ReturnToLaunch() : bool;
+fun RTL() : bool;
 fun MissionFinished() : bool;
 fun StartMission() : bool;
 fun ClearMission() : bool;
@@ -20,5 +20,3 @@ fun DisarmSystem() : bool;
 
 // Timer
 fun Sleep(msecs: int);
-
-fun SetDeterminism(det: bool);

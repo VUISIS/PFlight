@@ -37,3 +37,4 @@ CSharp/POutput
 C/PGenerated
 CSharp/FlightSystem.csproj
 CSharp/Test.cs
+Ext/MAVSDK-CSharp/

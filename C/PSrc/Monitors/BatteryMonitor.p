@@ -28,7 +28,7 @@ machine BatteryMonitor
     {
 		on eRespBatteryRemaining do (remaining: float)
 		{
-            if(remaining < 0.1 || count > 250)
+            if(remaining < 0.1 || count > 200)
             {
                 send flightcontroller, eBatteryRemaining, CRITICAL;
             }

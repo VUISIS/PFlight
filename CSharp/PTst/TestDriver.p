@@ -5,21 +5,21 @@ machine Drone
     {
         entry 
         {
-            SetDeterminism(true);
-            fc = new FlightController((f = 1, d = this));
+            fc = new FlightController(this);
         }
     }
 }
 
-machine NonDetDrone
+machine FailureDrone
 {
     var fc: FlightController;
+    var fi: FailureInjector;
     start state Init 
     {
-        entry
+        entry 
         {
-            SetDeterminism(false);
-            fc = new FlightController((f = 1, d = this));
+            fc = new FlightController(this);
+            fi = new FailureInjector(fc);
         }
     }
 }

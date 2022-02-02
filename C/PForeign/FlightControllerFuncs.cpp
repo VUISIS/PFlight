@@ -138,7 +138,7 @@ PRT_VALUE* P_UploadMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     _missionItems.clear();
 
     tinyxml2::XMLDocument doc;
-    const char* path = "/home/stephen/git/PFlight/Res/mission.xml";
+    const char* path = "../../Res/mission.xml";
     doc.LoadFile(path);
 
     tinyxml2::XMLElement* root = doc.RootElement();
@@ -193,7 +193,7 @@ PRT_VALUE* P_Holding_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     return PrtMkBoolValue((PRT_BOOLEAN)true);
 }
 
-PRT_VALUE* P_ReturnToLaunch_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+PRT_VALUE* P_RTL_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     auto res = _action->return_to_launch();
     if(res != mavsdk::Action::Result::Success)

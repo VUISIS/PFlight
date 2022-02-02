@@ -8,163 +8,71 @@ namespace PImplementation
     public static partial class GlobalFunctions
     {
         private static float battery_perc;
-        private static bool determinism = true;
         public static PrtBool CoreSetupMavSDK(PMachine machine)
         {
             battery_perc = 1.0f;
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool TelemetryHealthAllOk(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool ArmSystem(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            
+            return (PrtBool) true;
         }
 
         public static PrtBool TakeoffSystem(PrtFloat val, PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool UploadMission(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool SystemStatus(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtFloat BatteryRemaining(PMachine machine)
         {
-            if(determinism)
-            {
-                battery_perc = battery_perc * 0.9f;
-            }
-            else
-            {
-                battery_perc = machine.TryRandomInt(5, 100)/100.0f;
-            }
-            PrtFloat perc = (PrtFloat)battery_perc;
-            return perc;
+            battery_perc = battery_perc * 0.99f;
+            return (PrtFloat)battery_perc;
         }
 
         public static PrtBool Holding(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool Disarmed(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
-        public static PrtBool ReturnToLaunch(PMachine machine)
+        public static PrtBool RTL(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool MissionFinished(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
         public static PrtBool StartMission(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool ClearMission(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static void Sleep(PrtInt val, PMachine machine)
@@ -172,77 +80,30 @@ namespace PImplementation
             Thread.Sleep(val);
         }
 
-        public static void SetDeterminism(PrtBool val, PMachine machine)
-        {
-            determinism = val;
-        }
-
         public static PrtBool InAirStatus(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
         public static PrtBool WaitForDisarmed(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) false;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) false;
         }
         public static PrtBool IsAtTakeoffAlt(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
 
         public static PrtBool LandSystem(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
         public static PrtInt LandingState(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtInt) 1;
-            }
-            else
-            {
-                return (PrtInt) machine.TryRandomInt(0,4);
-            }
+            return (PrtInt) 1;
         }
         public static PrtBool DisarmSystem(PMachine machine)
         {
-            if(determinism)
-            {
-                return (PrtBool) true;
-            }
-            else
-            {
-                return (PrtBool) machine.TryRandomBool();
-            }
+            return (PrtBool) true;
         }
       }
 }

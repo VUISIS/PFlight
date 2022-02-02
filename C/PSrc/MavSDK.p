@@ -94,7 +94,7 @@ machine MavSDK
         on eReqReturnToLaunch do 
         {
             var status: bool;
-            status = ReturnToLaunch();
+            status = RTL();
             
             send controller, eRespReturnToLaunch, status;
         }

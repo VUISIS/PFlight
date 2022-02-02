@@ -1,0 +1,345 @@
+<TestLog> Running test 'PImplementation.FailDroneState.Execute'.
+<CreateLog> DroneModesOfOperation was created.
+<MonitorLog> DroneModesOfOperation enters state 'Init_3'.
+<CreateLog> LivenessMonitor was created.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<CreateLog> Plang.CSharpRuntime._GodMachine(1) was created by task '3536'.
+<CreateLog> PImplementation.FailureDrone(2) was created by Plang.CSharpRuntime._GodMachine(1).
+<StateLog> PImplementation.FailureDrone(2) enters state 'Init_6'.
+<CreateLog> FlightController(3) was created by PImplementation.FailureDrone(2).
+<CreateLog> FailureInjector(4) was created by PImplementation.FailureDrone(2).
+<StateLog> FlightController(3) enters state 'Init_1'.
+<CreateLog> MavSDK(5) was created by FlightController(3).
+<StateLog> FailureInjector(4) enters state 'Init_2'.
+<GotoLog> FailureInjector(4) is transitioning from state 'Init_2' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'Init_2'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<StateLog> MavSDK(5) enters state 'Init'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<CreateLog> TelemetryMonitor(6) was created by MavSDK(5).
+<CreateLog> SystemMonitor(7) was created by MavSDK(5).
+<StateLog> SystemMonitor(7) enters state 'Init_9'.
+<StateLog> TelemetryMonitor(6) enters state 'Init_10'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<CreateLog> BatteryMonitor(8) was created by MavSDK(5).
+<CreateLog> MissionMonitor(9) was created by MavSDK(5).
+<SendLog> 'MavSDK(5)' in state 'Init' sent event 'eLinkInitialized' to 'TelemetryMonitor(6)'.
+<StateLog> MissionMonitor(9) enters state 'Init_7'.
+<DequeueLog> 'TelemetryMonitor(6)' dequeued event 'eLinkInitialized' in state 'Init_10'.
+<GotoLog> TelemetryMonitor(6) is transitioning from state 'Init_10' to state 'MonitorTelemetry'.
+<StateLog> TelemetryMonitor(6) exits state 'Init_10'.
+<StateLog> TelemetryMonitor(6) enters state 'MonitorTelemetry'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<StateLog> BatteryMonitor(8) enters state 'Init_8'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'MavSDK(5)' in state 'Init' sent event 'eLinkInitialized' to 'SystemMonitor(7)'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<SendLog> 'MavSDK(5)' in state 'Init' sent event 'eLinkInitialized' to 'BatteryMonitor(8)'.
+<DequeueLog> 'BatteryMonitor(8)' dequeued event 'eLinkInitialized' in state 'Init_8'.
+<GotoLog> BatteryMonitor(8) is transitioning from state 'Init_8' to state 'MonitorBattery'.
+<StateLog> BatteryMonitor(8) exits state 'Init_8'.
+<StateLog> BatteryMonitor(8) enters state 'MonitorBattery'.
+<DequeueLog> 'SystemMonitor(7)' dequeued event 'eLinkInitialized' in state 'Init_9'.
+<GotoLog> SystemMonitor(7) is transitioning from state 'Init_9' to state 'MonitorSystem'.
+<StateLog> SystemMonitor(7) exits state 'Init_9'.
+<StateLog> SystemMonitor(7) enters state 'MonitorSystem'.
+<SendLog> 'MavSDK(5)' in state 'Init' sent event 'eLinkInitialized' to 'MissionMonitor(9)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<DequeueLog> 'MissionMonitor(9)' dequeued event 'eLinkInitialized' in state 'Init_7'.
+<GotoLog> MissionMonitor(9) is transitioning from state 'Init_7' to state 'MonitorMission'.
+<StateLog> MissionMonitor(9) exits state 'Init_7'.
+<StateLog> MissionMonitor(9) enters state 'MonitorMission'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'MavSDK(5)' in state 'Init' sent event 'eLinkInitialized' to 'FlightController(3)'.
+<GotoLog> MavSDK(5) is transitioning from state 'Init' to state 'WaitForReq'.
+<StateLog> MavSDK(5) exits state 'Init'.
+<StateLog> MavSDK(5) enters state 'WaitForReq'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eLinkInitialized' in state 'Init_1'.
+<GotoLog> FlightController(3) is transitioning from state 'Init_1' to state 'PreFlight'.
+<StateLog> FlightController(3) exits state 'Init_1'.
+<StateLog> FlightController(3) enters state 'PreFlight'.
+<MonitorLog> PImplementation.DroneModesOfOperation is processing event 'PImplementation.eSpec_PreFlight' in state 'Init_3'.
+<MonitorLog> DroneModesOfOperation exits state 'Init_3'.
+<MonitorLog> DroneModesOfOperation enters state 'PreFlight_1'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqBatteryRemaining' to 'MavSDK(5)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eBatteryRemaining' in state 'PreFlight'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqBatteryRemaining' in state 'WaitForReq'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespBatteryRemaining with payload (0.9900000095367432)' to 'BatteryMonitor(8)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'BatteryMonitor(8)' dequeued event 'eRespBatteryRemaining with payload (0.9900000095367432)' in state 'MonitorBattery'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'BatteryMonitor(8)' in state 'MonitorBattery' sent event 'eBatteryRemaining with payload (3)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eBatteryRemaining with payload (3)' and unblocked in state 'PreFlight'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqClearMission' to 'MavSDK(5)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eMissionCleared' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqClearMission' in state 'WaitForReq'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespClearMission with payload (True)' to 'MissionMonitor(9)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'MissionMonitor(9)' dequeued event 'eRespClearMission with payload (True)' in state 'MonitorMission'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<SendLog> 'MissionMonitor(9)' in state 'MonitorMission' sent event 'eMissionCleared with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eMissionCleared with payload (True)' and unblocked in state 'PreFlight'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqMissionUpload' to 'MavSDK(5)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eMissionUploaded' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqMissionUpload' in state 'WaitForReq'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespMissionUpload with payload (True)' to 'MissionMonitor(9)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<DequeueLog> 'MissionMonitor(9)' dequeued event 'eRespMissionUpload with payload (True)' in state 'MonitorMission'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<SendLog> 'MissionMonitor(9)' in state 'MonitorMission' sent event 'eMissionUploaded with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eMissionUploaded with payload (True)' and unblocked in state 'PreFlight'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqSystemStatus' to 'MavSDK(5)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eSystemConnected' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqSystemStatus' in state 'WaitForReq'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespSystemStatus with payload (True)' to 'SystemMonitor(7)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<DequeueLog> 'SystemMonitor(7)' dequeued event 'eRespSystemStatus with payload (True)' in state 'MonitorSystem'.
+<SendLog> 'SystemMonitor(7)' in state 'MonitorSystem' sent event 'eSystemConnected with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eSystemConnected with payload (True)' and unblocked in state 'PreFlight'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqTelemetryHealth' to 'MavSDK(5)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eTelemetryHealthAllOK' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqTelemetryHealth' in state 'WaitForReq'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespTelemetryHealth with payload (True)' to 'TelemetryMonitor(6)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'TelemetryMonitor(6)' dequeued event 'eRespTelemetryHealth with payload (True)' in state 'MonitorTelemetry'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'TelemetryMonitor(6)' in state 'MonitorTelemetry' sent event 'eTelemetryHealthAllOK with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eTelemetryHealthAllOK with payload (True)' and unblocked in state 'PreFlight'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqArm' to 'MavSDK(5)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqArm' in state 'WaitForReq'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespArm with payload (True)' to 'FlightController(3)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eRespArm with payload (True)' in state 'PreFlight'.
+<GotoLog> FlightController(3) is transitioning from state 'PreFlight' to state 'Armed'.
+<StateLog> FlightController(3) exits state 'PreFlight'.
+<StateLog> FlightController(3) enters state 'Armed'.
+<MonitorLog> PImplementation.DroneModesOfOperation is processing event 'PImplementation.eArm' in state 'PreFlight_1'.
+<MonitorLog> DroneModesOfOperation exits state 'PreFlight_1'.
+<MonitorLog> DroneModesOfOperation enters state 'Arm'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqSystemStatus' to 'MavSDK(5)'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqBatteryRemaining' to 'MavSDK(5)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqSystemStatus' in state 'WaitForReq'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqTelemetryHealth' to 'MavSDK(5)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqTakeoff with payload (33)' to 'MavSDK(5)'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespSystemStatus with payload (True)' to 'SystemMonitor(7)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<DequeueLog> 'SystemMonitor(7)' dequeued event 'eRespSystemStatus with payload (True)' in state 'MonitorSystem'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqBatteryRemaining' in state 'WaitForReq'.
+<SendLog> 'SystemMonitor(7)' in state 'MonitorSystem' sent event 'eSystemConnected with payload (True)' to 'FlightController(3)'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespBatteryRemaining with payload (0.9801000356674194)' to 'BatteryMonitor(8)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<DequeueLog> 'BatteryMonitor(8)' dequeued event 'eRespBatteryRemaining with payload (0.9801000356674194)' in state 'MonitorBattery'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<SendLog> 'BatteryMonitor(8)' in state 'MonitorBattery' sent event 'eBatteryRemaining with payload (3)' to 'FlightController(3)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eBatteryRemaining with payload (0)' to 'FlightController(3)'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqTelemetryHealth' in state 'WaitForReq'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'FailureInjector(4)' in state 'FailOneMonitor' sent event 'eFailureDelay' to 'FailureInjector(4)'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eSystemConnected with payload (True)' in state 'Armed'.
+<DequeueLog> 'FailureInjector(4)' dequeued event 'eFailureDelay' in state 'FailOneMonitor'.
+<GotoLog> FailureInjector(4) is transitioning from state 'FailOneMonitor' to state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) exits state 'FailOneMonitor'.
+<StateLog> FailureInjector(4) enters state 'FailOneMonitor'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespTelemetryHealth with payload (True)' to 'TelemetryMonitor(6)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<DequeueLog> 'MavSDK(5)' dequeued event 'eReqTakeoff with payload (33)' in state 'WaitForReq'.
+<SendLog> 'MavSDK(5)' in state 'WaitForReq' sent event 'eRespTakeoff with payload (True)' to 'FlightController(3)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'TelemetryMonitor(6)' dequeued event 'eRespTelemetryHealth with payload (True)' in state 'MonitorTelemetry'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eBatteryRemaining with payload (3)' in state 'Armed'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eBatteryRemaining with payload (0)' in state 'Armed'.
+<GotoLog> FlightController(3) is transitioning from state 'Armed' to state 'Shutdown'.
+<StateLog> FlightController(3) exits state 'Armed'.
+<StateLog> FlightController(3) enters state 'Shutdown'.
+<MonitorLog> PImplementation.DroneModesOfOperation is processing event 'PImplementation.eShutdownSystem' in state 'Arm'.
+<MonitorLog> DroneModesOfOperation exits state 'Arm'.
+<ErrorLog> PImplementation.DroneModesOfOperation received event 'PImplementation.eShutdownSystem' that cannot be handled.
+<StackTrace>    at Microsoft.Coyote.SystematicTesting.OperationScheduler.NotifyAssertionFailure(String text, Boolean killTasks, Boolean cancelExecution)
+   at Microsoft.Coyote.Specifications.Monitor.HandleEvent(Event e)
+   at Microsoft.Coyote.SystematicTesting.ControlledRuntime.Monitor(Type type, Event e, String senderName, String senderType, String senderStateName)
+   at Plang.CSharpRuntime.PMachine.AnnounceInternal(Event ev)
+   at Plang.CSharpRuntime.PMachine.Announce(Event ev, Object payload)
+   at PImplementation.FlightController.Anon_57(Event currentMachine_dequeuedEvent)
+   at Microsoft.Coyote.Actors.Actor.InvokeActionAsync(CachedDelegate cachedAction, Event e)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Microsoft.Coyote.Actors.Actor.InvokeActionAsync(CachedDelegate cachedAction, Event e)
+   at Microsoft.Coyote.Actors.StateMachine.ExecuteCurrentStateOnEntryAsync(Event e)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Microsoft.Coyote.Actors.StateMachine.ExecuteCurrentStateOnEntryAsync(Event e)
+   at Microsoft.Coyote.Actors.StateMachine.GotoStateAsync(Type s, String onExitActionName, Event e)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Microsoft.Coyote.Actors.StateMachine.GotoStateAsync(Type s, String onExitActionName, Event e)
+   at Microsoft.Coyote.Actors.StateMachine.HandleEventAsync(Event e)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Microsoft.Coyote.Actors.StateMachine.HandleEventAsync(Event e)
+   at Microsoft.Coyote.Actors.Actor.RunEventHandlerAsync()
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Microsoft.Coyote.Actors.Actor.RunEventHandlerAsync()
+   at Microsoft.Coyote.SystematicTesting.ControlledRuntime.<>c__DisplayClass31_0.<<RunActorEventHandler>b__0>d.MoveNext()
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Microsoft.Coyote.SystematicTesting.ControlledRuntime.<>c__DisplayClass31_0.<RunActorEventHandler>b__0()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   at System.Threading.ThreadPoolWorkQueue.Dispatch()
+
+<StrategyLog> Found bug using 'random' strategy.
+<StrategyLog> Testing statistics:
+<StrategyLog> Found 1 bug.
+<StrategyLog> Scheduling statistics:
+<StrategyLog> Explored 56 schedules: 56 fair and 0 unfair.
+<StrategyLog> Found 1.79% buggy schedules.
+<StrategyLog> Number of scheduling points in fair terminating schedules: 133 (min), 98216 (avg), 100000 (max).
+<StrategyLog> Exceeded the max-steps bound of '10000' in 98.21% of the fair schedules.

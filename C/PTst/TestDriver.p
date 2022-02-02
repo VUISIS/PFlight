@@ -5,7 +5,7 @@ machine Drone
     {
         entry 
         {
-            fc = new FlightController((f = 1, d = this));
+            fc = new FlightController(this);
         }
     }
 }

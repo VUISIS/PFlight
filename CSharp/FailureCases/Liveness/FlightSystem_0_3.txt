@@ -1,0 +1,197 @@
+<TestLog> Running test 'PImplementation.FailDroneState.Execute'.
+<CreateLog> DroneModesOfOperation was created.
+<MonitorLog> DroneModesOfOperation enters state 'Init_3'.
+<CreateLog> LivenessMonitor was created.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<CreateLog> Plang.CSharpRuntime._GodMachine(1) was created by task '2'.
+<CreateLog> PImplementation.FailureDrone(2) was created by Plang.CSharpRuntime._GodMachine(1).
+<StateLog> PImplementation.FailureDrone(2) enters state 'Init_6'.
+<CreateLog> FlightController(3) was created by PImplementation.FailureDrone(2).
+<StateLog> FlightController(3) enters state 'Init_1'.
+<CreateLog> MavSDK(4) was created by FlightController(3).
+<StateLog> MavSDK(4) enters state 'Init'.
+<CreateLog> TelemetryMonitor(5) was created by MavSDK(4).
+<StateLog> TelemetryMonitor(5) enters state 'Init_10'.
+<CreateLog> SystemMonitor(6) was created by MavSDK(4).
+<StateLog> SystemMonitor(6) enters state 'Init_9'.
+<CreateLog> BatteryMonitor(7) was created by MavSDK(4).
+<StateLog> BatteryMonitor(7) enters state 'Init_8'.
+<CreateLog> MissionMonitor(8) was created by MavSDK(4).
+<SendLog> 'MavSDK(4)' in state 'Init' sent event 'eLinkInitialized' to 'TelemetryMonitor(5)'.
+<DequeueLog> 'TelemetryMonitor(5)' dequeued event 'eLinkInitialized' in state 'Init_10'.
+<GotoLog> TelemetryMonitor(5) is transitioning from state 'Init_10' to state 'MonitorTelemetry'.
+<StateLog> TelemetryMonitor(5) exits state 'Init_10'.
+<StateLog> TelemetryMonitor(5) enters state 'MonitorTelemetry'.
+<StateLog> MissionMonitor(8) enters state 'Init_7'.
+<SendLog> 'MavSDK(4)' in state 'Init' sent event 'eLinkInitialized' to 'SystemMonitor(6)'.
+<DequeueLog> 'SystemMonitor(6)' dequeued event 'eLinkInitialized' in state 'Init_9'.
+<GotoLog> SystemMonitor(6) is transitioning from state 'Init_9' to state 'MonitorSystem'.
+<StateLog> SystemMonitor(6) exits state 'Init_9'.
+<StateLog> SystemMonitor(6) enters state 'MonitorSystem'.
+<SendLog> 'MavSDK(4)' in state 'Init' sent event 'eLinkInitialized' to 'BatteryMonitor(7)'.
+<DequeueLog> 'BatteryMonitor(7)' dequeued event 'eLinkInitialized' in state 'Init_8'.
+<GotoLog> BatteryMonitor(7) is transitioning from state 'Init_8' to state 'MonitorBattery'.
+<StateLog> BatteryMonitor(7) exits state 'Init_8'.
+<StateLog> BatteryMonitor(7) enters state 'MonitorBattery'.
+<SendLog> 'MavSDK(4)' in state 'Init' sent event 'eLinkInitialized' to 'MissionMonitor(8)'.
+<DequeueLog> 'MissionMonitor(8)' dequeued event 'eLinkInitialized' in state 'Init_7'.
+<GotoLog> MissionMonitor(8) is transitioning from state 'Init_7' to state 'MonitorMission'.
+<StateLog> MissionMonitor(8) exits state 'Init_7'.
+<StateLog> MissionMonitor(8) enters state 'MonitorMission'.
+<SendLog> 'MavSDK(4)' in state 'Init' sent event 'eLinkInitialized' to 'FlightController(3)'.
+<GotoLog> MavSDK(4) is transitioning from state 'Init' to state 'WaitForReq'.
+<StateLog> MavSDK(4) exits state 'Init'.
+<StateLog> MavSDK(4) enters state 'WaitForReq'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eLinkInitialized' in state 'Init_1'.
+<GotoLog> FlightController(3) is transitioning from state 'Init_1' to state 'PreFlight'.
+<StateLog> FlightController(3) exits state 'Init_1'.
+<StateLog> FlightController(3) enters state 'PreFlight'.
+<MonitorLog> PImplementation.DroneModesOfOperation is processing event 'PImplementation.eSpec_PreFlight' in state 'Init_3'.
+<MonitorLog> DroneModesOfOperation exits state 'Init_3'.
+<MonitorLog> DroneModesOfOperation enters state 'PreFlight_1'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqBatteryRemaining' to 'MavSDK(4)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eBatteryRemaining' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqBatteryRemaining' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespBatteryRemaining with payload (0.9900000095367432)' to 'BatteryMonitor(7)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'BatteryMonitor(7)' dequeued event 'eRespBatteryRemaining with payload (0.9900000095367432)' in state 'MonitorBattery'.
+<SendLog> 'BatteryMonitor(7)' in state 'MonitorBattery' sent event 'eBatteryRemaining with payload (3)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eBatteryRemaining with payload (3)' and unblocked in state 'PreFlight'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqClearMission' to 'MavSDK(4)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eMissionCleared' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqClearMission' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespClearMission with payload (True)' to 'MissionMonitor(8)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'MissionMonitor(8)' dequeued event 'eRespClearMission with payload (True)' in state 'MonitorMission'.
+<SendLog> 'MissionMonitor(8)' in state 'MonitorMission' sent event 'eMissionCleared with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eMissionCleared with payload (True)' and unblocked in state 'PreFlight'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqMissionUpload' to 'MavSDK(4)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eMissionUploaded' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqMissionUpload' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespMissionUpload with payload (True)' to 'MissionMonitor(8)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'MissionMonitor(8)' dequeued event 'eRespMissionUpload with payload (True)' in state 'MonitorMission'.
+<SendLog> 'MissionMonitor(8)' in state 'MonitorMission' sent event 'eMissionUploaded with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eMissionUploaded with payload (True)' and unblocked in state 'PreFlight'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqSystemStatus' to 'MavSDK(4)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eSystemConnected' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqSystemStatus' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespSystemStatus with payload (True)' to 'SystemMonitor(6)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'SystemMonitor(6)' dequeued event 'eRespSystemStatus with payload (True)' in state 'MonitorSystem'.
+<SendLog> 'SystemMonitor(6)' in state 'MonitorSystem' sent event 'eSystemConnected with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eSystemConnected with payload (True)' and unblocked in state 'PreFlight'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqTelemetryHealth' to 'MavSDK(4)'.
+<ReceiveLog> FlightController(3) is waiting to dequeue an event of type 'PImplementation.eTelemetryHealthAllOK' in state 'PreFlight'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqTelemetryHealth' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespTelemetryHealth with payload (True)' to 'TelemetryMonitor(5)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'TelemetryMonitor(5)' dequeued event 'eRespTelemetryHealth with payload (True)' in state 'MonitorTelemetry'.
+<SendLog> 'TelemetryMonitor(5)' in state 'MonitorTelemetry' sent event 'eTelemetryHealthAllOK with payload (True)' to 'FlightController(3)'.
+<ReceiveLog> 'FlightController(3)' dequeued event 'eTelemetryHealthAllOK with payload (True)' and unblocked in state 'PreFlight'.
+<SendLog> 'FlightController(3)' in state 'PreFlight' sent event 'eReqArm' to 'MavSDK(4)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqArm' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespArm with payload (True)' to 'FlightController(3)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eRespArm with payload (True)' in state 'PreFlight'.
+<GotoLog> FlightController(3) is transitioning from state 'PreFlight' to state 'Armed'.
+<StateLog> FlightController(3) exits state 'PreFlight'.
+<StateLog> FlightController(3) enters state 'Armed'.
+<MonitorLog> PImplementation.DroneModesOfOperation is processing event 'PImplementation.eArm' in state 'PreFlight_1'.
+<MonitorLog> DroneModesOfOperation exits state 'PreFlight_1'.
+<MonitorLog> DroneModesOfOperation enters state 'Arm'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqSystemStatus' to 'MavSDK(4)'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqSystemStatus' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespSystemStatus with payload (True)' to 'SystemMonitor(6)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<MonitorLog> Monitor 'LivenessMonitor' raised event 'GotoStateEvent' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters state 'Init_4'.
+<DequeueLog> 'SystemMonitor(6)' dequeued event 'eRespSystemStatus with payload (True)' in state 'MonitorSystem'.
+<SendLog> 'SystemMonitor(6)' in state 'MonitorSystem' sent event 'eSystemConnected with payload (True)' to 'FlightController(3)'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqBatteryRemaining' to 'MavSDK(4)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'Init_4'.
+<MonitorLog> LivenessMonitor exits state 'Init_4'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqTelemetryHealth' to 'MavSDK(4)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKReq' in state 'PendingReqs'.
+<MonitorLog> LivenessMonitor exits hot state 'PendingReqs'.
+<MonitorLog> LivenessMonitor enters hot state 'PendingReqs'.
+<SendLog> 'FlightController(3)' in state 'Armed' sent event 'eReqTakeoff with payload (33)' to 'MavSDK(4)'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqBatteryRemaining' in state 'WaitForReq'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespBatteryRemaining with payload (0.9801000356674194)' to 'BatteryMonitor(7)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqTelemetryHealth' in state 'WaitForReq'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eSystemConnected with payload (True)' in state 'Armed'.
+<DequeueLog> 'BatteryMonitor(7)' dequeued event 'eRespBatteryRemaining with payload (0.9801000356674194)' in state 'MonitorBattery'.
+<SendLog> 'MavSDK(4)' in state 'WaitForReq' sent event 'eRespTelemetryHealth with payload (True)' to 'TelemetryMonitor(5)'.
+<MonitorLog> PImplementation.LivenessMonitor is processing event 'PImplementation.eMavSDKResp' in state 'PendingReqs'.
+<DequeueLog> 'MavSDK(4)' dequeued event 'eReqTakeoff with payload (33)' in state 'WaitForReq'.
+<DequeueLog> 'TelemetryMonitor(5)' dequeued event 'eRespTelemetryHealth with payload (True)' in state 'MonitorTelemetry'.
+<SendLog> 'TelemetryMonitor(5)' in state 'MonitorTelemetry' sent event 'eTelemetryHealthAllOK with payload (True)' to 'FlightController(3)'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eTelemetryHealthAllOK with payload (True)' in state 'Armed'.
+<SendLog> 'BatteryMonitor(7)' in state 'MonitorBattery' sent event 'eBatteryRemaining with payload (3)' to 'FlightController(3)'.
+<DequeueLog> 'FlightController(3)' dequeued event 'eBatteryRemaining with payload (3)' in state 'Armed'.
+<ErrorLog> PImplementation.LivenessMonitor detected liveness bug in hot state 'PendingReqs' at the end of program execution.
+<StackTrace>    at Microsoft.Coyote.SystematicTesting.OperationScheduler.NotifyAssertionFailure(String text, Boolean killTasks, Boolean cancelExecution)
+   at Microsoft.Coyote.SystematicTesting.ControlledRuntime.CheckNoMonitorInHotStateAtTermination()
+   at Microsoft.Coyote.SystematicTesting.TestingEngine.RunNextIteration(Int32 iteration)
+   at Microsoft.Coyote.SystematicTesting.TestingEngine.<CreateTestingTask>b__37_0()
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   at System.Threading.Tasks.Task.ExecuteEntryUnsafe(Thread threadPoolThread)
+   at System.Threading.Tasks.Task.ExecuteFromThreadPool(Thread threadPoolThread)
+   at System.Threading.ThreadPoolWorkQueue.Dispatch()
+   at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback()
+
+<StrategyLog> Found bug using 'random' strategy.
+<StrategyLog> Testing statistics:
+<StrategyLog> Found 1 bug.
+<StrategyLog> Scheduling statistics:
+<StrategyLog> Explored 1 schedule: 1 fair and 0 unfair.
+<StrategyLog> Found 100.00% buggy schedules.
+<StrategyLog> Number of scheduling points in fair terminating schedules: 81 (min), 81 (avg), 81 (max).

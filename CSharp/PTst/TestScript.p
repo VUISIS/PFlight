@@ -1,5 +1,5 @@
 test CheckDroneState [main = Drone] : 
-        assert DroneModesOfOperation, LivenessMonitor in (union Hardware, Communication );
+        assert DroneModesOfOperation, LivenessMonitor in union { Drone }, FlightController, Communication;
 
-test NonDetCheckDroneState [main = NonDetDrone] : 
-        assert DroneModesOfOperation, LivenessMonitor in (union NonDetHardware, Communication );
+test FailDroneState [main = FailureDrone] : 
+        assert DroneModesOfOperation, LivenessMonitor in union { FailureDrone }, FlightController, Communication, FailureInjector;
