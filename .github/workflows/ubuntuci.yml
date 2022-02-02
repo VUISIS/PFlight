@@ -63,5 +63,5 @@ jobs:
       working-directory: ${{github.workspace}}/CSharp
       
     - name: Run Non-Deterministic Tests
-      run: coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.NonDetCheckDroneState.Execute -i 1000
+      run: coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.FailDroneState.Execute -i 1000
       working-directory: ${{github.workspace}}/CSharp
