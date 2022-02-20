@@ -62,7 +62,7 @@ jobs:
     - name: Build FlightSystem
       run: |
           cmake -DCMAKE_PREFIX_PATH="../MAVSDK/install/lib/cmake/MAVSDK;../MAVSDK/third_party/tinyxml2/tinyxml2/src/tinyxml2/cmake" ../../C
-          make -j$(nproc --all)
+          make
       working-directory: ${{github.workspace}}/build/FlightSystem
       
     - name: Run Deterministic Tests
