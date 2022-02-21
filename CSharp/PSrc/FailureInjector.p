@@ -17,10 +17,14 @@ machine FailureInjector
 {
   var rng: int;
   var failMachine: machine;
+  var tick: int;
+  var tickMax: int;
   start state Init 
   {
     entry (fm: machine) 
     {
+        tick = 0;
+        tickMax = choose(100000);
         failMachine = fm;
         goto FailOneMonitor;
     }
@@ -30,6 +34,15 @@ machine FailureInjector
   {
     entry 
     {
+      
+    }
+    on eLinkInitialized do 
+    {
+      while(tick < tickMax)
+      {
+        tick = tick + 1;
+      }
+
       if($)
       {
         rng = choose(3);
@@ -45,9 +58,14 @@ machine FailureInjector
         {
           send failMachine, eSystemConnected, false;
         }
-      }
 
-      goto FailOneMonitor;
+        raise halt;
+      }
+      else
+      {
+        tick = 0;
+        send this, eLinkInitialized;
+      }
     }
   }
 }

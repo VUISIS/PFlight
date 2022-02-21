@@ -20,6 +20,7 @@ machine FailureDrone
         {
             fc = new FlightController(this);
             fi = new FailureInjector(fc);
+            send fi, eLinkInitialized;
         }
     }
 }
