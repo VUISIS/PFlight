@@ -35,7 +35,7 @@ Install Java
 
 Install P & Coyote
 
-    dotnet tool install --global P --version 1.4.0
+    dotnet tool install --global P
     dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
 
 Build P C# Program
