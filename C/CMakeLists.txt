@@ -37,9 +37,23 @@ set(TINYXML_LIB
     ${CMAKE_SOURCE_DIR}/../build/MAVSDK/third_party/tinyxml2/tinyxml2/src/tinyxml2-build/libtinyxml2.a
 )
 
-set(LIBH_LIB
-    ${CMAKE_SOURCE_DIR}/../Ext/P/Ext/libhandler/out/gcc-amd64-linux-gnu/debug/libhandler.a
-)
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(amd64)|(AMD64)")
+    if(APPLE)
+        set(LIBH_LIB
+            ${CMAKE_SOURCE_DIR}/../Ext/P/Ext/libhandler/out/gcc-amd64-apple-darwin20.1.0/debug/libhandler.a
+        )
+    elseif (UNIX AND NOT APPLE)
+        set(LIBH_LIB
+            ${CMAKE_SOURCE_DIR}/../Ext/P/Ext/libhandler/out/gcc-amd64-linux-gnu/debug/libhandler.a
+        )
+    endif()
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "(arm)|(arm64)")
+    if (UNIX AND NOT APPLE)
+        set(LIBH_LIB
+            ${CMAKE_SOURCE_DIR}/../Ext/P/Ext/libhandler/out/gcc-arm64-linux-gnu/debug/libhandler.a
+        )
+    endif()
+endif ()
 
 add_executable(${PROJECT_NAME}
     ${SRC}
