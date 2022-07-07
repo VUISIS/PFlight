@@ -35,7 +35,7 @@ Install Java
 
 Install P & Coyote
 
-    dotnet tool install --global P --version 1.4.0
+    dotnet tool install --global P
     dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
 
 Build P C# Program
@@ -86,7 +86,7 @@ Running Simulation
     https://docs.qgroundcontrol.com/master/en/getting_started/download_and_install.html
 
     Run PX4 Docker
-    docker run --rm -it --env PX4_HOME_LAT=36.144809502492656 --env PX4_HOME_LON=-86.79316508433672 --env PX4_HOME_ALT=5.0 jonasvautherin/px4-gazebo-headless:v1.12.1
+    docker run --rm -it --env PX4_HOME_LAT=36.144809502492656 --env PX4_HOME_LON=-86.79316508433672 --env PX4_HOME_ALT=5.0 jonasvautherin/px4-gazebo-headless:1.12.1
 
     Run FlightSystem 
     build/FlightSystem/FlightSystem
