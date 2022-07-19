@@ -66,12 +66,10 @@ machine MavSDK
             send controller, eRespArm, armed;
             announce eMavSDKResp, 4;
         }
-        on eReqTakeoff do (alt: float)
+        on eReqTakeoff do 
         {
             var takeoff: bool;
-            takeoff = TakeoffSystem(alt);
-/******************* Liveness Spec Failure  ***********/
-            //UnReliableSend(controller, eRespTakeoff, takeoff, eMavSDKResp, 5);
+            takeoff = TakeoffSystem();
             send controller, eRespTakeoff, takeoff;
             announce eMavSDKResp, 5;
         }
@@ -88,13 +86,6 @@ machine MavSDK
             status = BatteryRemaining();
             send bMonitor, eRespBatteryRemaining, status;
             announce eMavSDKResp, 0;
-        }
-        on eReqHold do 
-        {
-            var status: bool;
-            status = Holding();
-            send controller, eRespHold, status;
-            announce eMavSDKResp, 8;
         }
         on eReqReturnToLaunch do 
         {
@@ -151,13 +142,6 @@ machine MavSDK
             status = LandingState();
             send controller, eRespLandingState, status;
             announce eMavSDKResp, 12;
-        }
-        on eReqDisarm do
-        {
-            var status: bool;
-            status = DisarmSystem();
-            send controller, eRespDisarm, status;
-            announce eMavSDKResp, 13;
         }
     }
 }

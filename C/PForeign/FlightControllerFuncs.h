@@ -19,7 +19,6 @@ extern PRT_VALUE* P_TelemetryHealthAllOk_IMPL(PRT_MACHINEINST* context, PRT_VALU
 extern PRT_VALUE* P_UploadMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_SystemStatus_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_BatteryRemaining_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
-extern PRT_VALUE* P_Holding_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_RTL_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_MissionFinished_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_StartMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);

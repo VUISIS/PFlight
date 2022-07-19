@@ -97,13 +97,6 @@ PRT_VALUE* P_ArmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_TakeoffSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    _action->set_takeoff_altitude_async(15.0f, [](mavsdk::Action::Result res){
-        if(res == mavsdk::Action::Result::Success)
-        {
-            return PrtMkBoolValue(PRT_TRUE);
-        }
-    });
-
 	_action->takeoff_async([](mavsdk::Action::Result res){ 
         if(res == mavsdk::Action::Result::Success)
         {
@@ -201,19 +194,9 @@ PRT_VALUE* P_BatteryRemaining_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRef
 
     if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
 	{
-        return PrtMkBoolValue((PRT_BOOLEAN)false);
+        return PrtMkFloatValue((PRT_FLOAT)fut.get());
     }
-    return PrtMkBoolValue((PRT_BOOLEAN)true);
-}
-
-PRT_VALUE* P_Holding_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
-    auto res = _action->hold();
-    if(res != mavsdk::Action::Result::Success)
-    {
-        return PrtMkBoolValue((PRT_BOOLEAN)false);
-    }
-    return PrtMkBoolValue((PRT_BOOLEAN)true);
+    return PrtMkFloatValue((PRT_FLOAT)0.0f);
 }
 
 PRT_VALUE* P_RTL_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)

@@ -25,7 +25,7 @@ namespace PImplementation
             return (PrtBool) true;
         }
 
-        public static PrtBool TakeoffSystem(PrtFloat val, PMachine machine)
+        public static PrtBool TakeoffSystem(PMachine machine)
         {
             return (PrtBool) true;
         }
@@ -44,16 +44,6 @@ namespace PImplementation
         {
             battery_perc = battery_perc * 0.99f;
             return (PrtFloat)battery_perc;
-        }
-
-        public static PrtBool Holding(PMachine machine)
-        {
-            return (PrtBool) true;
-        }
-
-        public static PrtBool Disarmed(PMachine machine)
-        {
-            return (PrtBool) true;
         }
 
         public static PrtBool RTL(PMachine machine)
@@ -86,7 +76,7 @@ namespace PImplementation
         }
         public static PrtBool WaitForDisarmed(PMachine machine)
         {
-            return (PrtBool) false;
+            return (PrtBool) true;
         }
         public static PrtBool IsAtTakeoffAlt(PMachine machine)
         {
@@ -100,10 +90,6 @@ namespace PImplementation
         public static PrtInt LandingState(PMachine machine)
         {
             return (PrtInt) 1;
-        }
-        public static PrtBool DisarmSystem(PMachine machine)
-        {
-            return (PrtBool) true;
         }
       }
 }

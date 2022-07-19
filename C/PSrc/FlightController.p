@@ -3,7 +3,7 @@ event eRaiseError;
 event eReqArm;
 event eReqTelemetryHealth;
 event eReqSystemStatus;
-event eReqTakeoff : float;
+event eReqTakeoff;
 event eReqMissionUpload;
 event eReqBatteryRemaining;
 event eReqHold;

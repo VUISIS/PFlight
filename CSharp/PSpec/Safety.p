@@ -1,6 +1,6 @@
 /*************************************************************************************
 
-    PreFlight -> Arm -> Takeoff -> Hold -> InAir -> Land -> Disarm -> Shutdown
+    PreFlight -> Arm -> Takeoff -> InAir -> Land -> Disarm -> Shutdown
 
 **************************************************************************************/
 
@@ -8,16 +8,14 @@ event eSpec_PreFlight;
 event eError;
 event eArm;
 event eTakeoff;
-event eHold;
 event eInAir;
 event eLanding;
-event eDisarmed;
 event eReturnToLaunch;
 event eShutdownSystem;
 
-spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHold,
+spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, 
                                     eInAir, eReturnToLaunch, eLanding,
-                                    eDisarmed, eShutdownSystem
+                                    eShutdownSystem
 {
     start state Init {
         on eSpec_PreFlight goto PreFlight;
@@ -41,13 +39,6 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
     state Takeoff
     {
         on eTakeoff goto Takeoff;
-        on eHold goto Hold;
-        on eError goto Error;
-        on eReturnToLaunch goto ReturnToLaunch;
-    }
-
-    state Hold
-    {
         on eInAir goto InAir;
         on eError goto Error;
         on eReturnToLaunch goto ReturnToLaunch;
@@ -64,12 +55,6 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff, eHo
     state Land
     {
         on eLanding goto Land;
-        on eError goto Error;
-        on eDisarmed goto Disarm;
-    }
-
-    state Disarm
-    {
         on eError goto Error;
         on eShutdownSystem goto Shutdown;
     }
