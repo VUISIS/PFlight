@@ -201,9 +201,9 @@ PRT_VALUE* P_BatteryRemaining_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRef
 
     if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
 	{
-        return PrtMkBoolValue((PRT_BOOLEAN)false);
+        return PrtMkFloatValue((PRT_FLOAT)fut.get());
     }
-    return PrtMkBoolValue((PRT_BOOLEAN)true);
+    return PrtMkFloatValue((PRT_FLOAT)0.0f);
 }
 
 PRT_VALUE* P_Holding_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
