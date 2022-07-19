@@ -1,5 +1,4 @@
 event eLinkInitialized;
-event eTakeoffReached;
 
 machine MavSDK
 {
@@ -11,6 +10,7 @@ machine MavSDK
     start state Init 
     {
         defer eReqMissionUpload;
+        ignore eRaiseError;
         entry(cntl: machine)
         {    
             controller = cntl;

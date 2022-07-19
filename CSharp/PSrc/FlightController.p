@@ -15,7 +15,6 @@ event eReqWaitForDisarmed;
 event eReqAtTakeoffAlt;
 event eReqLand;
 event eReqLandingState;
-event eReqDisarm;
 
 event eRespArm : bool;
 event eRespTelemetryHealth : bool;
@@ -32,7 +31,6 @@ event eRespWaitForDisarmed : bool;
 event eRespAtTakeoffAlt : bool;
 event eRespLand : bool;
 event eRespLandingState : int;
-event eRespDisarm : bool;
 
 machine FlightController
 {
@@ -187,14 +185,14 @@ machine FlightController
         {
             if(status == CRITICAL)
             {
-                goto Disarm;
+                goto Shutdown;
             }
         }
         on eTelemetryHealthAllOK do (health: bool)
         {
             if(!health)
             {
-                goto Disarm;
+                goto Shutdown;
             }
         }
         on eRespTakeoff do (res: bool)
@@ -388,7 +386,7 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespMissionFinished, eRespLand,
-               eMissionStarted, eRaiseError, eRespHold;
+               eMissionStarted, eRaiseError;
         entry
         {
             announce eReturnToLaunch;
@@ -424,7 +422,7 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespWaitForDisarmed, eRespMissionFinished,
-               eMissionStarted, eRaiseError, eRespLand, eRespLandingState, eRespHold, eRespReturnToLaunch;
+               eMissionStarted, eRaiseError, eRespLand, eRespLandingState, eRespReturnToLaunch;
         entry
         {
             announce eError;
@@ -436,11 +434,10 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespWaitForDisarmed, eRespMissionFinished,
-               eMissionStarted, eRespReturnToLaunch, eRespHold;
+               eMissionStarted, eRespReturnToLaunch;
         entry
         {
             announce eShutdownSystem;
-            raise halt;
         }
     }
 

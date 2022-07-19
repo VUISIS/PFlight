@@ -26,6 +26,7 @@ machine MavSDK
                 send bMonitor, eLinkInitialized;
                 send mMonitor, eLinkInitialized;
                 send controller, eLinkInitialized;
+
                 goto WaitForReq;
             }
             else
@@ -84,13 +85,6 @@ machine MavSDK
             
             send bMonitor, eRespBatteryRemaining, status;
         }
-        on eReqHold do 
-        {
-            var status: bool;
-            status = Holding();
-            
-            send controller, eRespHold, status;
-        }
         on eReqReturnToLaunch do 
         {
             var status: bool;
@@ -142,12 +136,6 @@ machine MavSDK
             var status: int;
             status = LandingState();
             send controller, eRespLandingState, status;
-        }
-        on eReqDisarm do
-        {
-            var status: bool;
-            status = DisarmSystem();
-            send controller, eRespDisarm, status;
         }
     }
 }

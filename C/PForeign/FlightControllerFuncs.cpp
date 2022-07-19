@@ -59,7 +59,7 @@ std::shared_ptr<mavsdk::System> get_system(mavsdk::Mavsdk& mavsdk)
 // Init foreign function
 PRT_VALUE* P_CoreSetupMavSDK_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {	
-	mavsdk::ConnectionResult connection_result = _mavsdk->add_any_connection("udp://:14540");
+	mavsdk::ConnectionResult connection_result = _mavsdk->add_any_connection("serial:///path/to/serial/dev[:baudrate]");
 
     if (connection_result != mavsdk::ConnectionResult::Success) 
 	{
@@ -194,9 +194,9 @@ PRT_VALUE* P_BatteryRemaining_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRef
 
     if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
 	{
-        return PrtMkFloatValue((PRT_FLOAT)fut.get());
+        return PrtMkFloatValue((PRT_FLOAT)-1.0f);
     }
-    return PrtMkFloatValue((PRT_FLOAT)0.0f);
+    return PrtMkFloatValue((PRT_FLOAT)fut.get());
 }
 
 PRT_VALUE* P_RTL_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
@@ -257,25 +257,15 @@ PRT_VALUE* P_WaitForDisarmed_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 
 PRT_VALUE* P_IsAtTakeoffAlt_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    auto prom = std::promise<float>{};
-    auto fut = prom.get_future();
-    _telemetry->subscribe_position([&prom](mavsdk::Position position)
+    float target_alt = _action->get_takeoff_altitude_m();
+    float current_position = 0.0f;
+    while(current_position < target_alt)
     {
-        prom.set_value(position.relative_altitude_m);
-    });
-
-    if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
-	{
-        return PrtMkBoolValue((PRT_BOOLEAN)false);
+        current_position = _telemetry->position().relative_altitude_m;
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
-    auto val = fut.get();
-    if(abs(val - 15.0f) < 0.5f)
-    {
-        return PrtMkBoolValue(PRT_TRUE);
-    }
-
-    return PrtMkBoolValue(PRT_FALSE);
+    return PrtMkBoolValue(PRT_TRUE);
 }
 
 PRT_VALUE* P_Sleep_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
@@ -333,15 +323,4 @@ PRT_VALUE* P_LandingState_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     }
 
     return PrtMkIntValue((PRT_INT)0);
-}
-
-PRT_VALUE* P_DisarmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
-{
-    mavsdk::Action::Result res = _action->disarm(); 
-    if(res == mavsdk::Action::Result::Success)
-    {
-        return PrtMkBoolValue((PRT_BOOLEAN)true);
-    }
-
-    return PrtMkBoolValue((PRT_BOOLEAN)false);
 }

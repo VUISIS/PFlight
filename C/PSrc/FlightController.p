@@ -6,7 +6,6 @@ event eReqSystemStatus;
 event eReqTakeoff;
 event eReqMissionUpload;
 event eReqBatteryRemaining;
-event eReqHold;
 event eReqReturnToLaunch;
 event eReqMissionStart;
 event eReqClearMission;
@@ -16,7 +15,6 @@ event eReqWaitForDisarmed;
 event eReqAtTakeoffAlt;
 event eReqLand;
 event eReqLandingState;
-event eReqDisarm;
 
 event eRespArm : bool;
 event eRespTelemetryHealth : bool;
@@ -34,7 +32,6 @@ event eRespWaitForDisarmed : bool;
 event eRespAtTakeoffAlt : bool;
 event eRespLand : bool;
 event eRespLandingState : int;
-event eRespDisarm : bool;
 
 machine FlightController
 {
@@ -142,7 +139,7 @@ machine FlightController
  
             send mavsdk, eReqBatteryRemaining;
 
-            send mavsdk, eReqTakeoff, 33.0;
+            send mavsdk, eReqTakeoff;
         }
         on eSystemConnected do (connected: bool)
         {
@@ -155,14 +152,14 @@ machine FlightController
         {
             if(status == CRITICAL)
             {
-                goto Disarm;
+                goto Shutdown;
             }
         }
         on eTelemetryHealthAllOK do (health: bool)
         {
             if(!health)
             {
-                goto Disarm;
+                goto Shutdown;
             }
         }
         on eRespTakeoff do (res: bool)
@@ -215,68 +212,22 @@ machine FlightController
         {
             if(status)
             {
-                send mavsdk, eReqHold;
+                send mavsdk, eReqMissionStart;
             }
             else
             {
                 goto Takeoff;
             }
         }
-        on eRespHold do (res: bool) 
+        on eMissionStarted do (res: bool) 
         {
             if(res)
             {
-                goto Hold;
-            }
-            else
-            {
-                GoRTL();
-            }
-        }
-    }
-
-    state Hold
-    {
-        entry
-        {            
-            send mavsdk, eReqTelemetryHealth; 
-        
-            send mavsdk, eReqSystemStatus;
- 
-            send mavsdk, eReqBatteryRemaining;
-
-            send mavsdk, eReqMissionStart; 
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
-            }
-        }
-        on eBatteryRemaining do (status: tBatteryState)
-        {
-            if(status == CRITICAL)
-            {
-                GoRTL();
-            }
-        }
-        on eTelemetryHealthAllOK do (health: bool)
-        {
-            if(!health)
-            {
-                GoRTL();
-            }
-        }
-        on eMissionStarted do (started: bool)
-        {
-            if(!started)
-            {
-                goto Error;
-            }
-            else
-            {
                 goto Mission;
+            }
+            else
+            {
+                GoRTL();
             }
         }
     }
@@ -358,7 +309,21 @@ machine FlightController
         {
             if(val == 1)
             {
-                goto Disarm;
+                send mavsdk, eReqWaitForDisarmed;
+                receive
+                {
+                    case eRespWaitForDisarmed do (status: bool)
+                    {
+                        if(!status)
+                        {
+                            goto Land;
+                        }
+                        else
+                        {
+                            goto Shutdown;
+                        }
+                    }
+                }
             }
             else
             { 
@@ -367,40 +332,11 @@ machine FlightController
         }
     }
 
-    state Disarm
-    {
-        ignore eBatteryRemaining, eTelemetryHealthAllOK, eMissionStarted, eRespTakeoff;
-        entry
-        {
-            send mavsdk, eReqSystemStatus;
-  
-            send mavsdk, eReqDisarm;
-        }
-        on eSystemConnected do (connected: bool)
-        {
-            if(!connected)
-            {
-                goto Error;
-            }
-        }
-        on eRespDisarm do (status: bool)
-        {
-            if(status)
-            {
-                goto Shutdown;
-            }
-            else
-            {
-                goto Error;
-            }
-        }
-    }
-
     state ReturnToLaunch
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespMissionFinished,
-               eMissionStarted, eRaiseError, eRespHold;
+               eMissionStarted, eRaiseError;
         entry
         {
             send mavsdk, eReqWaitForDisarmed;
@@ -433,8 +369,7 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespWaitForDisarmed, eRespMissionFinished,
-               eMissionStarted, eRaiseError, eRespLand, eRespLandingState, eRespHold, eRespReturnToLaunch,
-               eRespDisarm;
+               eMissionStarted, eRaiseError, eRespLand, eRespLandingState, eRespReturnToLaunch;
         entry
         {
             raise halt;
@@ -445,7 +380,7 @@ machine FlightController
     {
         ignore eBatteryRemaining, eSystemConnected, eTelemetryHealthAllOK, eRespArm,
                eRespTakeoff, eRespAtTakeoffAlt, eRespWaitForDisarmed, eRespMissionFinished,
-               eMissionStarted, eRespReturnToLaunch, eRespHold;
+               eMissionStarted, eRespReturnToLaunch;
         entry
         {
         }
