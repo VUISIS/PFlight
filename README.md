@@ -14,6 +14,7 @@ State machine of a drone using MAVSDK and the P programming language.
 
     MAVSDK 1.4.4
     VUISIS/P 1.1.4
+    DOTNET 3.1
 
 # Build
 
