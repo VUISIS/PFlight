@@ -2,7 +2,8 @@
 fun CoreSetupMavSDK() : bool;
 fun TelemetryHealthAllOk() : bool;
 fun ArmSystem() : bool;
-fun TakeoffSystem(alt: float) : bool;
+fun SetTakeoffHeight(alt: float) : bool;
+fun TakeoffSystem() : bool;
 fun UploadMission() : bool;
 fun SystemStatus() : bool;
 fun BatteryRemaining() : float;
