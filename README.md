@@ -35,7 +35,7 @@ Install Java
 
 Install P & Coyote
 
-    dotnet tool install --global P
+    dotnet tool install --global P --version 1.1.4
     dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
 
 Build P C# Program
@@ -57,6 +57,12 @@ Build P C Program
 Install CMake
 
     sudo apt install cmake
+    
+Install Python3 Future 
+
+    pip3 install future
+    
+    Note: Install globally. May need sudo.
 
 Build MavSDK
 
