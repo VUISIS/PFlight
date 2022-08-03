@@ -10,6 +10,11 @@
 <img src="./Res/DirectedGraph.png?raw=true" width="640" height="480">
 
 State machine of a drone using MAVSDK and the P programming language.
+# Prerequisites
+
+    MAVSDK 1.4.4
+    VUISIS/P 1.1.4
+
 # Build
 
 Clone Repo
