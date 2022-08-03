@@ -17,6 +17,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.8.10'
+        cache: 'pip' 
+    - run: pip install future
         
     - uses: actions/setup-dotnet@v1
       with:
