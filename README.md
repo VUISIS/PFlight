@@ -102,3 +102,17 @@ Running Simulation
 
     Run FlightSystem 
     build/FlightSystem/FlightSystem
+    
+Running With Docker
+
+    # Pull the image
+    docker pull saj122/pflight:quadrotor
+
+    # Launch QGroundControl
+
+    # Pull the jonasvautherin/px4-gazebo-headless:1.12.1 image and run it
+    docker run --rm -it —network host --env PX4_HOME_LAT=36.144809502492656 --env PX4_HOME_LON=-86.79316508433672 --env PX4_HOME_ALT=5.0 jonasvautherin/px4-gazebo-headless:1.12.1 <MAIN_IP_ADDRESS> 127.0.0.1
+
+    # Pull saj122/pflight:quadrotor image and run it
+    # Omit the —platform linux/amd64 flag if running on a x86_64 system.
+    docker run -it --rm --name flight_sim -w /PFlight/build/FlightSystem --network host --platform linux/amd64 saj122/pflight:quadrotor FlightSystem
