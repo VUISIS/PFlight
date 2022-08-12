@@ -64,9 +64,11 @@ machine MavSDK
             
             send controller, eRespArm, armed;
         }
-        on eReqTakeoff do
+        on eReqTakeoff do (alt: float)
         {
             var takeoff: bool;
+            var set_height: bool;
+            set_height = SetTakeoffHeight(alt);
             takeoff = TakeoffSystem();
             
             send controller, eRespTakeoff, takeoff;

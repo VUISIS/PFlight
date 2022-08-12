@@ -3,7 +3,7 @@ event eRaiseError;
 event eReqArm;
 event eReqTelemetryHealth;
 event eReqSystemStatus;
-event eReqTakeoff;
+event eReqTakeoff : float;
 event eReqMissionUpload;
 event eReqBatteryRemaining;
 event eReqReturnToLaunch;
@@ -139,7 +139,7 @@ machine FlightController
  
             send mavsdk, eReqBatteryRemaining;
 
-            send mavsdk, eReqTakeoff;
+            send mavsdk, eReqTakeoff, 33.0;
         }
         on eSystemConnected do (connected: bool)
         {
@@ -312,7 +312,7 @@ machine FlightController
                 send mavsdk, eReqWaitForDisarmed;
                 receive
                 {
-                    case eRespWaitForDisarmed do (status: bool)
+                    case eRespWaitForDisarmed: (status: bool)
                     {
                         if(!status)
                         {

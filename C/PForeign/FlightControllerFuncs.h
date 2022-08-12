@@ -14,6 +14,7 @@ extern "C" {
     
 extern PRT_VALUE* P_CoreSetupMavSDK_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_ArmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
+extern PRT_VALUE* P_SetTakeoffHeight_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_TakeoffSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_TelemetryHealthAllOk_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);
 extern PRT_VALUE* P_UploadMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs);

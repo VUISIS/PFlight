@@ -59,8 +59,8 @@ std::shared_ptr<mavsdk::System> get_system(mavsdk::Mavsdk& mavsdk)
 // Init foreign function
 PRT_VALUE* P_CoreSetupMavSDK_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {	
-	mavsdk::ConnectionResult connection_result = _mavsdk->add_any_connection("serial:///path/to/serial/dev[:baudrate]");
-
+	//mavsdk::ConnectionResult connection_result = _mavsdk->add_any_connection("serial:///path/to/serial/dev[:baudrate]");
+    mavsdk::ConnectionResult connection_result = _mavsdk->add_any_connection("udp://:14540");
     if (connection_result != mavsdk::ConnectionResult::Success) 
 	{
         std::cerr << "<ErrorLog> Connection failed: " << connection_result << '\n';
@@ -95,15 +95,24 @@ PRT_VALUE* P_ArmSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
     }
 }
 
+PRT_VALUE* P_SetTakeoffHeight_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
+{
+    const mavsdk::Action::Result stares = _action->set_takeoff_altitude(15.0f);
+    if(stares == mavsdk::Action::Result::Success)
+    {
+        return PrtMkBoolValue(PRT_TRUE);
+    }
+    return PrtMkBoolValue(PRT_FALSE);
+}
+
 PRT_VALUE* P_TakeoffSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-	_action->takeoff_async([](mavsdk::Action::Result res){ 
-        if(res == mavsdk::Action::Result::Success)
-        {
-            _action->takeoff_async(nullptr);
-        }
-    });
-    return PrtMkBoolValue(PRT_TRUE);
+	const mavsdk::Action::Result tores = _action->takeoff();
+    if(tores == mavsdk::Action::Result::Success)
+    {
+        return PrtMkBoolValue(PRT_TRUE);
+    }
+    return PrtMkBoolValue(PRT_FALSE);
 }
 
 PRT_VALUE* P_TelemetryHealthAllOk_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
@@ -114,6 +123,7 @@ PRT_VALUE* P_TelemetryHealthAllOk_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** ar
     {
         if(health)
         {
+            _telemetry->subscribe_health_all_ok(nullptr);
             prom.set_value(true);
         }
     });
@@ -166,35 +176,22 @@ PRT_VALUE* P_UploadMission_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_SystemStatus_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    auto prom = std::promise<bool>{};
-    auto fut = prom.get_future();
-    _system->subscribe_is_connected([&prom](bool connected)
-    {
-        if(connected)
-        {
-            prom.set_value(true);
-        }
-    });
-
-    if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
-	{
-        return PrtMkBoolValue((PRT_BOOLEAN)false);
-    }
-    return PrtMkBoolValue((PRT_BOOLEAN)fut.get());
+    return PrtMkBoolValue((PRT_BOOLEAN)_system->is_connected());
 }
 
 PRT_VALUE* P_BatteryRemaining_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
     auto prom = std::promise<float>{};
     auto fut = prom.get_future();
-    _telemetry->subscribe_battery([&prom](mavsdk::Battery battery)
+    _telemetry->subscribe_battery([&prom](mavsdk::Telemetry::Battery battery)
     {
+        _telemetry->subscribe_battery(nullptr);
         prom.set_value(battery.remaining_percent);
     });
 
     if (fut.wait_for(std::chrono::seconds(30)) == std::future_status::timeout) 
 	{
-        return PrtMkFloatValue((PRT_FLOAT)-1.0f);
+        return PrtMkFloatValue((PRT_FLOAT)0.0f);
     }
     return PrtMkFloatValue((PRT_FLOAT)fut.get());
 }
@@ -257,12 +254,20 @@ PRT_VALUE* P_WaitForDisarmed_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs
 
 PRT_VALUE* P_IsAtTakeoffAlt_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    float target_alt = _action->get_takeoff_altitude_m();
-    float current_position = 0.0f;
-    while(current_position < target_alt)
+    auto prom = std::promise<float>{};
+    auto fut = prom.get_future();
+    _telemetry->subscribe_position([&prom](mavsdk::Telemetry::Position position)
     {
-        current_position = _telemetry->position().relative_altitude_m;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        if(abs(position.relative_altitude_m - 15.0f) < 0.5f)
+        {
+            _telemetry->subscribe_position(nullptr);
+            prom.set_value(position.relative_altitude_m);
+        }
+    });
+
+    if (fut.wait_for(std::chrono::seconds(120)) == std::future_status::timeout) 
+	{
+        return PrtMkBoolValue((PRT_BOOLEAN)false);
     }
 
     return PrtMkBoolValue(PRT_TRUE);
@@ -305,12 +310,11 @@ PRT_VALUE* P_CancelTimer_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 
 PRT_VALUE* P_LandSystem_IMPL(PRT_MACHINEINST* context, PRT_VALUE*** argRefs)
 {
-    _action->land_async([](mavsdk::Action::Result res){ 
-        if(res == mavsdk::Action::Result::Success)
-        {
-        }
-     });
-
+    auto res = _action->land();
+    if(res != mavsdk::Action::Result::Success)
+    {
+        return PrtMkBoolValue((PRT_BOOLEAN)false);
+    }
     return PrtMkBoolValue((PRT_BOOLEAN)true);
 }
 
