@@ -15,6 +15,7 @@ State machine of a drone using MAVSDK and the P programming language.
 Clone Repo
 
     git clone git@github.com:VUISIS/PFlight.git --recursive
+    git checkout fixed-wing
 
 ## Ubuntu 20.04:
 
@@ -35,7 +36,7 @@ Install Java
 
 Install P & Coyote
 
-    dotnet tool install --global P
+    dotnet tool install --global P --version 1.1.4
     dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
 
 Build P C# Program
@@ -46,8 +47,6 @@ Build P C# Program
 Run Test Program Cases
 
     coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.CheckDroneState.Execute -i 1 -v
-
-    coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.FailDroneState.Execute -i 1 -v
 
 Build P C Program
 
