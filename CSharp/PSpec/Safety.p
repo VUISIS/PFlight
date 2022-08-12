@@ -33,7 +33,7 @@ spec DroneModesOfOperation observes eSpec_PreFlight, eError, eArm, eTakeoff,
     {
         on eTakeoff goto Takeoff;
         on eError goto Error;
-        on eDisarmed goto Disarm;
+        on eShutdownSystem goto Shutdown;
     }
 
     state Takeoff

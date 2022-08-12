@@ -25,6 +25,11 @@ namespace PImplementation
             return (PrtBool) true;
         }
 
+        public static PrtBool SetTakeoffHeight(PrtFloat alt, PMachine machine)
+        {
+            return (PrtBool) true;
+        }
+
         public static PrtBool TakeoffSystem(PMachine machine)
         {
             return (PrtBool) true;

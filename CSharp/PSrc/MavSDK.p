@@ -29,10 +29,7 @@ machine MavSDK
                 
                 goto WaitForReq;
             }
-            else
-            {
-                send controller, eRaiseError;
-            }
+            send controller, eRaiseError;
         }
     }
 
@@ -66,9 +63,11 @@ machine MavSDK
             send controller, eRespArm, armed;
             announce eMavSDKResp, 4;
         }
-        on eReqTakeoff do 
+        on eReqTakeoff do (alt: float)
         {
             var takeoff: bool;
+            var set_height: bool;
+            set_height = SetTakeoffHeight(alt);
             takeoff = TakeoffSystem();
             send controller, eRespTakeoff, takeoff;
             announce eMavSDKResp, 5;
