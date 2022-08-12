@@ -2,9 +2,9 @@ name: UbuntuCI
 
 on:
   push:
-    branches: [ main, fixed-wing ]
+    branches: [ fixed-wing ]
   pull_request:
-    branches: [ main, fixed-wing ]
+    branches: [ fixed-wing ]
 
 env:
   BUILD_TYPE: Release
@@ -30,7 +30,7 @@ jobs:
 
     - name: Install P & Coyote
       run: |
-          dotnet tool install --global P --version 1.1.5
+          dotnet tool install --global P --version 1.1.4
           dotnet tool install --global Microsoft.Coyote.CLI --version 1.0.5
       working-directory: ${{github.workspace}}
       
@@ -65,8 +65,4 @@ jobs:
       
     - name: Run Deterministic Tests
       run: coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.CheckDroneState.Execute -i 100
-      working-directory: ${{github.workspace}}/CSharp
-      
-    - name: Run Non-Deterministic Tests
-      run: coyote test ./POutput/netcoreapp3.1/FlightSystem.dll -m PImplementation.FailDroneState.Execute -i 100
       working-directory: ${{github.workspace}}/CSharp
